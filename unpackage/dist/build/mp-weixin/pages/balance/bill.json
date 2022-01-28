@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "账单列表",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "bill-list-dot": "/pages/balance/bill-list-dot",
+    "u-sticky": "/node-modules/uview-ui/components/u-sticky/u-sticky",
+    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs",
+    "card-bill-cell": "/components/CardBillCell/CardBillCell",
+    "list": "/components/list/list"
+  }
+}

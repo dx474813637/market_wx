@@ -1,0 +1,1 @@
+<view class="data-v-424a3580"><view class="list data-v-424a3580"><list generic:scoped-slots-dot="discount-list-dot" data-vue-generic="scoped" vue-id="82c253c0-1" listType="dot" list="{{list}}" emptyText="暂无优惠劵" emptyMode="order" loadStatus="{{loadStatus}}" class="data-v-424a3580" bind:__l="__l" vue-slots="{{['dot']}}"></list></view></view>

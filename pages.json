@@ -1,0 +1,325 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				// "navigationStyle": "custom",
+				"navigationBarTitleText": "首页"
+			}
+		}, 
+		// {
+		// 	"path": "pages/index/indextemplate",
+		// 	"style": {
+		// 		"navigationBarTitleText": "首页",
+		// 		"enablePullDownRefresh": false
+		// 	}
+
+		// }, 
+		// {
+		// 	"path": "pages/classify/classify",
+		// 	"style": {
+		// 		"navigationBarTitleText": "分类",
+		// 		"enablePullDownRefresh": false
+		// 	}
+
+		// }, 
+		{
+			"path": "pages/prodList/prodList",
+			"style": {
+				"navigationBarTitleText": "产品",
+				// "enablePullDownRefresh": true,
+				"onReachBottomDistance": 50
+			}
+
+		}, {
+			"path": "pages/prodDetail/prodDetail",
+			"style": {
+				"navigationBarTitleText": "商品详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false,
+				// "disableScroll": true,
+				// #ifdef MP
+				"navigationStyle": "custom"
+				// #endif
+			}
+
+		}, {
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 50
+				// "navigationStyle": "custom",
+				// "navigationBarTextStyle": "white"
+			}
+
+		}, {
+			"path": "pages/discount/discount",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/orderDetail/orderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/address/address",
+			"style": {
+				"navigationBarTitleText": "收货地址管理",
+				"enablePullDownRefresh": false,
+				"onReachBottomDistance": 50
+			}
+
+		}, {
+			"path": "pages/address/addressManage",
+			"style": {
+				"navigationBarTitleText": "新增地址",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/createOrder/createOrder",
+			"style": {
+				"navigationBarTitleText": "创建订单",
+				"enablePullDownRefresh": false
+			}
+
+		}, 
+		// {
+		// 	"path": "pages/userInfo/userInfo",
+		// 	"style": {
+		// 		"navigationBarTitleText": "会员信息",
+		// 		"enablePullDownRefresh": false
+		// 	}
+
+		// }, 
+		{
+			"path": "pages/money/pay",
+			"style": {
+				"navigationBarTitleText": "支付页面",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/money/paySuccess",
+			"style": {
+				"navigationBarTitleText": "支付成功",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/balance/balance",
+			"style": {
+				"navigationBarTitleText": "Sinopay余额",
+				"enablePullDownRefresh": false
+				// "disableScroll": true
+			}
+
+		}, {
+			"path": "pages/balance/balanceCenter",
+			"style": {
+				"navigationBarTitleText": "我的资金中心",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/balance/bill",
+			"style": {
+				"navigationBarTitleText": "账单列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/balance/billDetail",
+			"style": {
+				"navigationBarTitleText": "账单详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/discount/shopCoupon",
+			"style": {
+				"navigationBarTitleText": "商家优惠劵列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/live/live",
+			"style": {
+				"navigationBarTitleText": "直播",
+				"enablePullDownRefresh": false,
+				"disableScroll": true
+			}
+
+		}
+		,
+		// {
+		//     "path" : "pages/live/live_play",
+		//     "style" :                                                                                    
+		//     {
+		//         "navigationBarTitleText": "直播",
+		//         "enablePullDownRefresh": false
+		//     }
+
+		// }
+
+		// , {
+		// 	"path": "pages/liveList/liveList",
+		// 	"style": {
+		// 		"navigationBarTitleText": "直播/回看列表",
+		// 		"enablePullDownRefresh": false
+		// 	}
+
+		// }, 
+		// {
+		// 	"path": "pages/prodList/prodList2",
+		// 	"style": {
+		// 		"navigationBarTitleText": "产品列表",
+		// 		"enablePullDownRefresh": false,
+		// 		"disableScroll": true
+		// 	}
+
+		// }, 
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false,
+				"disableScroll": false
+			}
+
+		}, {
+			"path": "pages/login/code",
+			"style": {
+				"navigationBarTitleText": "输入验证码",
+				"enablePullDownRefresh": false,
+				"disableScroll": false
+			}
+
+		}, {
+			"path": "pages/follow/follow",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/news/newsList",
+			"style": {
+				"navigationBarTitleText": "资讯列表",
+				"onReachBottomDistance": 50
+				// "enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/news/newsDetail",
+			"style": {
+				"navigationBarTitleText": "资讯",
+				"enablePullDownRefresh": false
+			}
+
+		}
+
+	    // ,{
+     //        "path" : "pages/classify/classify2",
+     //        "style" :                                                                                    
+     //        {
+     //            "navigationBarTitleText": "产品分类",
+     //            "enablePullDownRefresh": false
+     //        }
+            
+     //    }
+        ,{
+            "path" : "pages/discount/couponShare",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "列表",
+				"onReachBottomDistance": 50,
+				"enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/loginBind/loginBind",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/ewm/ewm",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/hq/hq",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "行情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/shop/shop",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	// "subPackages": [
+	// 	{
+	// 		"root": "templateHome",
+	// 		"pages": [
+	// 			{
+	// 				"path": "index/home",
+	// 				"style": {
+	// 					"navigationBarTitleText": "首页",
+	// 					"enablePullDownRefresh": false
+	// 				}
+				
+	// 			}
+	// 		]
+	// 	}
+	// ],
+	// "preloadRule": {
+	// 	"pages/index/indextemplate": {
+	// 		"network": "all",
+	// 		 "packages": ["templateHome"]
+	// 	}
+	// },
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#f5f5f5"
+	}
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "收货地址管理",
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-loadmore": "/node-modules/uview-ui/components/u-loadmore/u-loadmore",
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
+    "list": "/components/list/list"
+  }
+}

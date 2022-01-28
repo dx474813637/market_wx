@@ -1,0 +1,168 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+/* 页面左右间距 */
+/* 文字尺寸 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+.card.data-v-40bee9c2 {
+  margin-bottom: 20rpx;
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  min-height: 200rpx;
+}
+.card .card-header.data-v-40bee9c2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.card .card-header .header-left.data-v-40bee9c2 {
+  display: flex;
+  color: #999;
+  flex: 1;
+  overflow: hidden;
+}
+.card .card-header .header-left .left-item.data-v-40bee9c2 {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.card .card-header .header-left .left-item .shop-name.data-v-40bee9c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 30rpx;
+  padding: 0 10rpx;
+}
+.card .card-header .header-right.data-v-40bee9c2 {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.card .card-header .header-right .right-item .status-text.data-v-40bee9c2 {
+  color: #ff4700;
+}
+.card .card-content .p-list.data-v-40bee9c2 {
+  margin-bottom: 20rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.card .card-content .p-list .p-list-item.data-v-40bee9c2 {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+.card .card-content .p-list .p-list-item .p-img.data-v-40bee9c2 {
+  flex: 0 0 160rpx;
+  height: 160rpx;
+  position: relative;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-right: 20rpx;
+}
+.card .card-content .p-list .p-list-item .p-img.data-v-40bee9c2:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.card .card-content .p-list .p-list-item .p-info.data-v-40bee9c2 {
+  flex: 1;
+  overflow: hidden;
+}
+.card .card-content .p-list .p-list-item .p-info .p-info-name.data-v-40bee9c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 40rpx;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+}
+.card .card-content .p-list .p-list-item .p-info .p-info-sub.data-v-40bee9c2 {
+  color: #999;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+.card .card-content .p-list .p-list-item .p-info-money.data-v-40bee9c2 {
+  min-width: 120rpx;
+  padding-left: 30rpx;
+  text-align: right;
+}
+.card .card-content .p-list .p-list-item .p-info-money .p-count.data-v-40bee9c2 {
+  color: #999;
+  padding-top: 10rpx;
+}
+.card .card-content .p-money.data-v-40bee9c2 {
+  font-size: 24rpx;
+}
+.card .card-content .p-money .price-dw.data-v-40bee9c2 {
+  font-family: '微软雅黑';
+  padding-right: 8rpx;
+}
+.card .card-content .p-money .price-text.data-v-40bee9c2 {
+  font-size: 30rpx;
+}
+.card .card-content .p-price.data-v-40bee9c2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 60rpx;
+}
+.card .card-content .p-price .price-item.data-v-40bee9c2 {
+  display: flex;
+  align-items: baseline;
+  padding-left: 20rpx;
+  color: #999;
+}
+.card .card-content .p-price .price-item.dark.data-v-40bee9c2 {
+  color: #000;
+  font-weight: bold;
+}
+.card .card-content .p-price .price-item .price-label.data-v-40bee9c2 {
+  padding-right: 5rpx;
+}
+.card .card-footer.data-v-40bee9c2 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 80rpx;
+}
+.card .card-footer .footer-item.data-v-40bee9c2 {
+  padding-left: 30rpx;
+}
+

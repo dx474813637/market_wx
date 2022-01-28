@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "支付页面",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-count-to": "/node-modules/uview-ui/components/u-count-to/u-count-to",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+  }
+}

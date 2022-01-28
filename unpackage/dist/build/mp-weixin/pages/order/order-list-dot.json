@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "order-list-dot": "/pages/order/order-list-dot",
+    "u-sticky": "/node-modules/uview-ui/components/u-sticky/u-sticky",
+    "u-tabs": "/node-modules/uview-ui/components/u-tabs/u-tabs",
+    "card-order": "/components/CardOrder/CardOrder",
+    "list": "/components/list/list"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="list-item data-v-3bf4cf52"><card-coupon vue-id="0e26bf40-26" list="{{item}}" data-event-opts="{{[['^handleClick',[['handleTake']]]]}}" bind:handleClick="__e" class="data-v-3bf4cf52" bind:__l="__l" vue-slots="{{['btnText']}}"><view slot="btnText">立即使用</view></card-coupon></view>
