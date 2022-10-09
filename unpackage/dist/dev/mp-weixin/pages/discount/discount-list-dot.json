@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "discount-list-dot": "/pages/discount/discount-list-dot",
-    "card-coupon": "/components/CardCoupon/CardCoupon",
-    "list": "/components/list/list"
-  }
-}

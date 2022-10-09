@@ -10,23 +10,23 @@
 			</view>
 			<view class="mian-list-title">请选择以下密码设置</view>
 			<view class="main-list" >
-				<view @click="handleGoto({url: '/sinopay/money/sino_loginpw_update'})" class="main-item u-flex u-flex-items-center">
+				<!-- <view @click="handleGoto({url: '/sinopay/money/sino_loginpw_update'})" class="main-item u-flex u-flex-items-center">
 					<view class="item-left u-flex u-flex-center u-flex-items-center">
 						<i class="custom-icon-lock custom-icon"></i>
 					</view>
-					<view class="item-center">
+					<view class="item-center-safe">
 						<view class="item-title">修改sinopay登录密码</view>
 						<view class="item-sub">此密码注册时以短信发送至绑定手机</view>
 					</view>
 					<view class="item-right">
 						<i class="custom-icon-right custom-icon"></i>
 					</view>
-				</view>
+				</view> -->
 				<view @click="handleGoto({url: '/sinopay/money/sino_loginpw_forget'})" class="main-item u-flex u-flex-items-center">
 					<view class="item-left u-flex u-flex-center u-flex-items-center">
 						<i class="custom-icon-question custom-icon"></i>
 					</view>
-					<view class="item-center">
+					<view class="item-center-safe">
 						<view class="item-title">重置登录密码</view>
 						<view class="item-sub">忘记支付密码通过短信验证重置</view>
 					</view>
@@ -38,7 +38,7 @@
 					<view class="item-left u-flex u-flex-center u-flex-items-center">
 						<i class="custom-icon-moneybag custom-icon"></i>
 					</view>
-					<view class="item-center">
+					<view class="item-center-safe">
 						<view class="item-title">设置或修改支付密码</view>
 						<view class="item-sub">此密码需在注册开户后设置</view>
 					</view>
@@ -50,7 +50,7 @@
 					<view class="item-left u-flex u-flex-center u-flex-items-center">
 						<i class="custom-icon-question custom-icon"></i>
 					</view>
-					<view class="item-center">
+					<view class="item-center-safe">
 						<view class="item-title">重置支付密码</view>
 						<view class="item-sub">忘记支付密码通过短信验证重置</view>
 					</view>
@@ -62,7 +62,7 @@
 					<view class="item-left u-flex u-flex-center u-flex-items-center">
 						<i class="custom-icon-friendadd custom-icon"></i>
 					</view>
-					<view class="item-center">
+					<view class="item-center-safe">
 						<view class="item-title">创建收款账户</view>
 						<view class="item-sub">需要旺铺交易收款时一键创建（不可撤销）</view>
 					</view>
@@ -80,16 +80,23 @@
 </template>
 
 <script>
-	import {mapState, mapGetters, mapMutations} from 'vuex'
+	import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 	export default {
 		data() {
 			return {
 				show: false
 			};
 		},
+		onLoad() {
+			
+			this.getSinoAccount()
+		},
 		methods: {
 			...mapMutations({
 				handleGoto: 'sinopay/handleGoto'
+			}),
+			...mapActions({ 
+				getSinoAccount: 'sinopay/getSinoAccount', 
 			}),
 			handleMoreTools() {
 				this.show = true
@@ -145,7 +152,7 @@
 					font-size: 24px;
 				}
 			}
-			.item-center {
+			.item-center-safe {
 				flex: 1;
 				.item-title {
 					font-size: 16px;

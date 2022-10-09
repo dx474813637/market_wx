@@ -2,11 +2,15 @@
 	<view class="wrapper">
 		<u-navbar
 			is-fixed
+			immersive 
+			:is-back="false"
 			:background="{ backgroundColor: 'transparent' }"
 		>
-			<view @click="handleGoto({url: '/sinopay/money/index', type: 'redirectTo'})" class="u-flex u-flex-items-center text-white" slot="left">
-				<i class="custom-icon-back custom-icon"></i>
-				<text class="u-p-l-10">资金中心</text>
+			<view class="u-flex u-flex-items-center text-white u-m-l-30" >
+				<view class="u-flex u-flex-items-center" @click="handleGoto({url: '/sinopay/money/index', type: 'reLaunch'})"> 
+					<i class="custom-icon-back custom-icon"></i>
+					<text class="u-p-l-10">资金中心</text>
+				</view>
 			</view>
 		</u-navbar>
 		<view class="header">
@@ -111,6 +115,10 @@
 		},
 		components: {
 			moneyCard
+		},
+		async onLoad() {
+			uni.showLoading()
+			await this.getSinoFundAccount({type: this.type})
 		},
 		methods: {
 			...mapMutations({

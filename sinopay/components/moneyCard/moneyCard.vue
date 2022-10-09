@@ -21,7 +21,7 @@
 					<view class="money-title u-flex u-flex-items-end">
 						<p>冻结金额 (元)</p>
 					</view>
-					<view class="money-num text-danger u-flex u-flex-items-end u-flex-items-end">
+					<view class="money-num text-danger u-flex u-flex-items-end u-flex-end">
 						{{!showMoney? '****': (wallet.bal_freeze || 0)}}
 					</view>
 				</view>
@@ -35,7 +35,7 @@
 				</view>
 				<view class="item-right">
 					<view @click="handleGoto({url: '/sinopay/money/card_add', params: { wallet: sinoType }})" class="btn">
-						<template v-if="sino.auth_state == '1'">添加银行卡</template>
+						<template v-if="sino.list.auth_state == '1'">添加银行卡</template>
 						<template v-else>绑卡认证</template>
 						
 					</view>
@@ -107,9 +107,8 @@
 				refreshSinoFundAccount: 'sinopay/refreshSinoFundAccount'
 			}),
 			async refreshBtn() {
-				this.setSinoFundLoading(true)
-				await this.refreshSinoFundAccount({id: this.wallet.id})
-				this.getSinoFundAccount()
+				// this.setSinoFundLoading(true)
+				await this.getSinoFundAccount({type: this.sinoType}) 
 			}
 		},
 	}

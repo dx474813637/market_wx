@@ -59,7 +59,7 @@
 							<view class="text-base item-t">收款账户</view>
 						</view>
 						<view class="item-right">
-							<view>{{wallet_s.user_fundaccno}}</view>
+							<view>{{sino.list.user_fundaccno_s}}</view>
 							<i class="custom-icon-right custom-icon"></i>
 						</view>
 					</view>
@@ -136,8 +136,8 @@
 			// DisabledCard
 		},
 		async onLoad() {
-			// uni.showLoading()
-			// await getUserCard()
+			uni.showLoading()
+			await getUserCard()
 			await this.getSinoAccount() 
 			if(this.sino.State == 1) {
 				this.show = true

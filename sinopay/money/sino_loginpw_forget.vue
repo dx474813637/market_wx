@@ -1,12 +1,12 @@
 <template>
-	<view class="u-p-20">
+	<view class="u-p-40">
 		
 		<u-form
 			labelPosition="left"
 			:model="model"
 			:rules="rules"
-			ref="from"
-			labelWidth="80"
+			ref="form"
+			labelWidth="160"
 		>
 			
 			<u-form-item
@@ -16,7 +16,7 @@
 			>
 				<u-input
 					v-model="model.npasswd"
-					password
+					type="password"
 					clearable
 				></u-input>
 			</u-form-item>
@@ -27,7 +27,7 @@
 			>
 				<u-input
 					v-model="model.cpasswd"
-					password
+					type="password"
 					clearable
 				></u-input>
 			</u-form-item>
@@ -46,29 +46,21 @@
 				prop="code"
 				ref="code"
 			>	
-				<u-input
-					v-model="model.code"
-					placeholder="验证码"
-					clearable
-				>
-					<!-- <template slot="suffix">
-						<u-code
-							ref="uCode"
-							@change="codeChange"
-							keep-running
-							change-text="XS后重新获取"
-							@start="disabled = true"
-							@end="disabled = false"
-						></u-code>
-						<u-button
-							type="primary"
-							@tap="getCode"
-							:text="tips"
-							size="small"
-							:disabled="disabled"
-						></u-button>
-					</template> -->
-				</u-input>
+				<view class="u-flex u-flex-items-center">
+					<view class="u-flex-1"> 
+						<u-input
+							v-model="model.code"
+							placeholder="验证码"
+							clearable
+						></u-input>
+					</view>
+					<view class="verification">
+						<u-toast ref="uToast"></u-toast>
+						<u-verification-code :seconds="seconds" @end="end" @start="start" ref="uCode" 
+						@change="codeChange"></u-verification-code>
+						<u-button type="primary" plain size="mini" @click="getCode">{{tips}}</u-button>
+					</view>
+				</view>
 			</u-form-item>
 		</u-form>
 		
@@ -80,10 +72,12 @@
 
 <script>
 	import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+	 
 	export default {
 		data() {
 			return {
-				tips: '',
+				tips: '', 
+				seconds: 60,
 				disabled: false,
 				btnDisabled: false,
 				model: {
@@ -104,16 +98,6 @@
 							message: '请填写新密码',
 							trigger: ['blur', 'change']
 						},
-						// {
-						// 	type: 'string',
-						// 	message: '新密码格式不正确',
-						// 	trigger: ['blur'],
-						// 	validator: (rule, value, callback) => {
-						// 		const reg1 = new RegExp(/[a-zA-Z]/)
-						// 		const reg2 = new RegExp(/[\d]/)
-						// 		return reg1.test(value) && reg2.test(value) && value.length >= 5 ;
-						// 	},
-						// },
 					],
 					cpasswd: [{
 							type: 'string',
@@ -133,70 +117,76 @@
 			}
 		},
 		computed: {
-			...mapState({
-				myCpy: state => state.user.myCpy,
+			...mapState({ 
 				sino: state => state.sinopay.sino,
 			}),
 		},
 		onReady() {
-			this.$refs.from.setRules(this.rules)
+			// refCode = this.$refs.uCode;
+			this.$refs.form.setRules(this.rules)
 		},
-		methods: {
-			
+		methods: { 
+			...mapActions({ 
+				getSinoAccount: 'sinopay/getSinoAccount', 
+			}),
 			codeChange(text) {
 				this.tips = text;
 			},
 			async getCode() {
-				if(this.disabled) return
-				uni.showLoading({
-					title: '正在获取验证码'
-				})
-				this.$refs.uCode.start();
-				const res = await this.$api.sino_account_reset_psw({
-					params: {
-						flag: 1,
-						id: this.sino.id
-					},
-				})
-				if(res.code == 1) {
-					uni.showToast({
-						title: '验证码已发送'
-					})
+				if(this.$refs.uCode.canGetCode) { 
+					uni.showLoading({
+						title: '正在获取验证码'
+					}) 
+					const res = await this.$http.get('market/change_pass_mobile')
+					if(res.data.code == 1) {
+						this.$u.toast('验证码已发送');
+						// 通知验证码组件内部开始倒计时
+					}
+					this.$refs.uCode.start(); 
+					
+				} else {
+					this.$u.toast('倒计时结束后再发送');
 				}
+			},
+			end() {
+				this.$u.toast('倒计时结束');
+			},
+			start() {
+				this.$u.toast('倒计时开始');
 			},
 			submit() {
 				
-				this.$refs.from.validate().then(async res => {
-					uni.showLoading()
-					const r = await this.$api.sino_account_reset_psw({
-						params: {
-							...this.model,
-							flag: 2,
-							captcha: this.model.code,
-							id: this.sino.id
-						},
-					})
-					console.log(r)
-					if(r.code == 1) {
-						// this.$utils.prePage() && this.$utils.prePage().refreshList();
-						uni.showToast({
-							title: r.msg,
-							icon: 'none'
-						})
-						
-						setTimeout(() => {
-							uni.navigateBack()
-						}, 800)
+				this.$refs.form.validate(async res => {
+					if(res) {
+						uni.showLoading()
+						const r = await this.$http.get('market/change_pass', {
+							params: { 
+								code: this.model.code,
+								npay_passwd: this.model.npasswd,
+								cpay_passwd: this.model.cpasswd,
+							},
+						}) 
+						if(r.data.code == 1) { 
+							uni.showToast({
+								title: r.data.msg,
+								icon: 'none'
+							})
+							this.getSinoAccount()
+							setTimeout(() => {
+								uni.navigateBack()
+							}, 800)
+						}
 					}
-				}).catch(errors => {
-					uni.$u.toast('校验失败')
-				})
+					else {
+						this.$u.toast('校验失败')
+					}
+					
+				}) 
 			},
 			
 		}
 	}
 </script>
 
-<style scoped lang="scss">
-
+<style scoped lang="scss"> 
 </style>

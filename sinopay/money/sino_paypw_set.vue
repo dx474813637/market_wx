@@ -1,22 +1,22 @@
 <template>
-	<view class="u-p-20">
+	<view class="u-p-40">
 		
 		<u-form
 			labelPosition="left"
 			:model="model"
 			:rules="rules"
-			ref="from"
-			labelWidth="80"
+			ref="form"
+			labelWidth="160"
 		> 
 			<u-form-item
 				label="原始密码"
 				prop="opasswd"
 				ref="opasswd"
-				 v-if="sino.paypwd == '1'"
+				v-if="sino.list.sinopay_pay_pass == '1'"
 			>
 				<u-input
 					v-model="model.opasswd"
-					password
+					type="password"
 					clearable
 				></u-input>
 			</u-form-item>
@@ -27,7 +27,7 @@
 			>
 				<u-input
 					v-model="model.npasswd"
-					password
+					type="password"
 					clearable
 				></u-input>
 			</u-form-item>
@@ -38,47 +38,34 @@
 			>
 				<u-input
 					v-model="model.cpasswd"
-					password
+					type="password"
 					clearable
 				></u-input>
 			</u-form-item>
 			<!-- <u-form-item>
 				<text class="text-light">密码可使用任何英文字母及阿拉伯数字组合，不得少于5个字符。</text>
 			</u-form-item> -->
-			<u-form-item 
-				label="手机" 
-				v-if="sino.mobile1"
-			>
-				<view>{{sino.mobile1}}</view>
-			</u-form-item>
+			
 			<u-form-item
 				label="验证码"
 				prop="code"
 				ref="code"
 			>	
-				<u-input
-					v-model="model.code"
-					placeholder="验证码"
-					clearable
-				>
-					<!-- <template slot="suffix">
-						<u-code
-							ref="uCode"
-							@change="codeChange"
-							keep-running
-							change-text="XS后重新获取"
-							@start="disabled = true"
-							@end="disabled = false"
-						></u-code>
-						<u-button
-							type="primary"
-							@tap="getCode"
-							:text="tips"
-							size="small"
-							:disabled="disabled"
-						></u-button>
-					</template> -->
-				</u-input>
+				<view class="u-flex u-flex-items-center">
+					<view class="u-flex-1"> 
+						<u-input
+							v-model="model.code"
+							placeholder="验证码"
+							clearable
+						></u-input>
+					</view>
+					<view class="verification">
+						<u-toast ref="uToast"></u-toast>
+						<u-verification-code :seconds="seconds" @end="end" @start="start" ref="uCode" 
+						@change="codeChange"></u-verification-code>
+						<u-button type="primary" plain size="mini" @click="getCode">{{tips}}</u-button>
+					</view>
+				</view>
 			</u-form-item>
 		</u-form>
 		
@@ -100,6 +87,7 @@
 		data() {
 			return {
 				tips: '',
+				seconds: 60,
 				disabled: false,
 				btnDisabled: false,
 				model: {
@@ -112,7 +100,7 @@
 		},
 		computed: {
 			...mapState({
-				myCpy: state => state.user.myCpy,
+				// myCpy: state => state.user.myCpy,
 				sino: state => state.sinopay.sino,
 			}),
 			rules() {
@@ -128,17 +116,7 @@
 							required: true,
 							message: '请填写新密码',
 							trigger: ['blur', 'change']
-						},
-						// {
-						// 	type: 'string',
-						// 	message: '新密码格式不正确',
-						// 	trigger: ['blur'],
-						// 	validator: (rule, value, callback) => {
-						// 		const reg1 = new RegExp(/[a-zA-Z]/)
-						// 		const reg2 = new RegExp(/[\d]/)
-						// 		return reg1.test(value) && reg2.test(value) && value.length >= 5 ;
-						// 	},
-						// },
+						}, 
 					],
 					cpasswd: [{
 							type: 'string',
@@ -155,7 +133,7 @@
 						},
 					]
 				}
-				if(this.sino.paypwd == '1') {
+				if(this.sino.list.sinopay_pay_pass == '1' ) {
 					base = {
 						...base, 
 						opasswd: {
@@ -171,7 +149,7 @@
 			}
 		},
 		onReady() {
-			this.$refs.from.setRules(this.rules)
+			this.$refs.form.setRules(this.rules)
 		},
 		onLoad() {
 			if(this.sino.paypwd == 1) {
@@ -184,55 +162,61 @@
 			...mapMutations({
 				handleGoto: 'sinopay/handleGoto', 
 			}),
+			...mapActions({ 
+				getSinoAccount: 'sinopay/getSinoAccount', 
+			}),
 			codeChange(text) {
 				this.tips = text;
 			},
 			async getCode() {
-				if(this.disabled) return
-				uni.showLoading({
-					title: '正在获取验证码'
-				})
-				this.$refs.uCode.start();
-				const res = await this.$api.sino_account_change_paypwd({
-					params: {
-						//...this.model, 
-						flag: 1,
-						id: this.sino.id,
-					},
-				})
-				if(res.code == 1) {
-					uni.showToast({
-						title: '验证码已发送'
-					})
+				if(this.$refs.uCode.canGetCode) {
+					uni.showLoading({
+						title: '正在获取验证码'
+					}) 
+					const res = await this.$http.get('market/passwd_sendsms')
+					if(res.data.code == 1) {
+						this.$u.toast('验证码已发送'); 
+					}
+					this.$refs.uCode.start(); 
+					
+				} else {
+					this.$u.toast('倒计时结束后再发送');
 				}
 			},
+			end() {
+				this.$u.toast('倒计时结束');
+			},
+			start() {
+				this.$u.toast('倒计时开始');
+			},
 			submit() {
-				
-				this.$refs.from.validate().then(async res => {
-					uni.showLoading()
-					const r = await this.$api.sino_account_change_paypwd({
-						params: {
-							...this.model, 
-							captcha: this.model.code,
-							flag: 2,
-							id: this.sino.id,
-						},
-					})
-					console.log(r)
-					if(r.code == 1) {
-						// this.$utils.prePage() && this.$utils.prePage().refreshList();
-						uni.showToast({
-							title: r.msg,
-							icon: 'none'
-						})
-						
-						setTimeout(() => {
-							uni.navigateBack()
-						}, 800)
+				this.$refs.form.validate(async res => {
+					if(res) {
+						uni.showLoading()
+						const r = await this.$http.get(`market/${this.sino.list.sinopay_pay_pass == '1'? 'sinopay_change_passwd' : 'sinopay_create_passwd'}`, {
+							params: { 
+								code: this.model.code,
+								npay_passwd: this.model.npasswd,
+								cpay_passwd: this.model.cpasswd,
+								opay_passwd: this.model.opasswd,
+							},
+						}) 
+						if(r.data.code == 1) { 
+							uni.showToast({
+								title: r.data.msg,
+								icon: 'none'
+							})
+							this.getSinoAccount()
+							setTimeout(() => {
+								uni.navigateBack()
+							}, 800)
+						}
 					}
-				}).catch(errors => {
-					uni.$u.toast('校验失败')
-				})
+					else {
+						this.$u.toast('校验失败')
+					}
+					
+				}) 
 			}
 		}
 	}

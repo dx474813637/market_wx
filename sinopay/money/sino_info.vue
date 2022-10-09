@@ -11,23 +11,7 @@
 							<view>Sinopay账号</view>
 						</view>
 						<view class="item-right">
-							<view>{{sino.sinopay_poster}}</view>
-						</view>
-					</view>
-					<view class="list-item">
-						<view class="item-left">
-							<view>公司名称</view>
-						</view>
-						<view class="item-right">
-							<view>{{myCpy.name}}</view>
-						</view>
-					</view>
-					<view class="list-item">
-						<view class="item-left">
-							<view>统一社会信用代码</view>
-						</view>
-						<view class="item-right">
-							<view>{{sino.reg_no1}}</view>
+							<view>{{sino.list.bind_info.sinopay_login}}</view>
 						</view>
 					</view>
 					<view class="list-item">
@@ -35,27 +19,38 @@
 							<view>用户类型</view>
 						</view>
 						<view class="item-right">
-							<view>企业</view>
+							<view v-if="sino.list.sinop_type == 'C'">个人</view>
+							<view v-else>企业</view>
 						</view>
 					</view> 
 					<view class="list-item">
 						<view class="item-left">
-							<view>状态</view>
+							<view v-if="sino.list.sinop_type == 'C'">姓名</view>
+							<view v-else>公司名称</view>
 						</view>
 						<view class="item-right">
-							<view>{{sino.state | sinoState2str}}</view>
+							<view>{{sino.list.name}}</view>
 						</view>
 					</view>
+					<!-- <view class="list-item">
+						<view class="item-left">
+							<view v-if="sino.list.sinop_type == 'B'">统一社会信用代码</view>
+							<view v-else>身份证</view>
+						</view>
+						<view class="item-right">
+							<view>{{sino.list.bind_info.market_reg_no}}</view>
+						</view>
+					</view> -->
 					<view class="list-item">
 						<view class="item-left">
 							<view>认证状态</view>
 						</view>
 						<view class="item-right">
-							<view>
-								{{sino.auth_state | sinoAuthState2str}}
+							<view v-if="sino.list.auth_state == 1">
+								已认证
 							</view>
-							<view class="text-primary u-m-l-10" v-if="sino.auth_state != 1" @click="handleGoto('/sinopay/money/card_add')">
-								 去认证
+							<view v-else class="text-primary u-m-l-10" >
+								未认证
 							</view>
 						</view>
 					</view>
@@ -64,15 +59,12 @@
 							<view>绑定时间</view>
 						</view>
 						<view class="item-right">
-							<view>{{sino.ctime}}</view>
+							<view>{{sino.list.bind_info.ctime}}</view>
 						</view>
 					</view>
-				</view>
-				<view class="u-flex u-flex-items-center u-flex-center u-p-20 u-m-b-20">
-					<text class="text-base u-font-26" @click="handleGoto('/sinopay/money/sino_acc_list')">绑定列表</text>
-				</view>
+				</view> 
 				
-				<u-button type="error" @click="unbind" v-if="sino.state == 2">解除绑定</u-button>
+				<!-- <u-button type="error" @click="unbind" v-if="sino.state == 2">解除绑定</u-button> -->
 			</view>
 		</view>
 		<!-- <menusBar tabbar theme="white" border></menusBar> -->
@@ -93,8 +85,8 @@
 		},
 		computed: {
 			...mapState({
-				sino: state => state.sinopay.sino,
-				myCpy: state => state.user.myCpy
+				sino: state => state.sinopay.sino, 
+				userInfo: state => state.userInfo
 			})
 		},
 		async onLoad() {

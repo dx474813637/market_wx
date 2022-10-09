@@ -15,7 +15,7 @@
 							<view class="icon-acc u-flex u-flex-items-center u-flex-center">
 								<i class="custom-icon-my custom-icon"></i>
 							</view>
-							<span class="acc-name">{{sino.list.hasOwnProperty('bind_info') ? sino.list.bind_info.market_login : '未开通或绑定资金账号'}}</span>
+							<span class="acc-name">{{sino.list.hasOwnProperty('bind_info') ? sino.list.bind_info.sinopay_login : '未开通或绑定资金账号'}}</span>
 						</view> 
 					</view>
 				</view>
@@ -67,8 +67,8 @@
 				</view>
 			</view> 
 	
-			<view class="main-card2" v-else-if="mode == '2'">
-				<view class="card-item"  v-if="sino.auth_state == 1">
+			<view class="main-card2 " v-else-if="mode == '2'">
+				<view class="card-item"  v-if="sino.list.auth_state == 1">
 					<view class="item-left icon">
 						<i class="custom-icon-safe custom-icon"></i>
 					</view>
@@ -92,8 +92,8 @@
 					</view>
 					<view class="item-right ">
 						<view class="c-title">账号类型</view>
-						<view class="c-value" v-if="sino.auth_state == 1">企业</view>
-						<view class="c-value" v-else >未认证</view>
+						<view class="c-value" v-if="sino.list.sinopay_pay_pass == 'C'">个人</view>
+						<view class="c-value" v-else >企业</view>
 					</view>
 				</view>
 			</view>
@@ -292,7 +292,7 @@
 	
 	.main-card2 {
 		background-color: #fff;
-		height: 50px;
+		height: 80px;
 		display: flex;
 		align-items: center;
 		border-radius: 3px;

@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "follow-list-dot": "/pages/follow/follow-list-dot",
-    "list": "/components/list/list",
-    "card-product-cell": "/components/CardProductCell/CardProductCell"
-  }
-}

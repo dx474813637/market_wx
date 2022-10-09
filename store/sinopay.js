@@ -40,7 +40,7 @@ let state = {
 	actions = {
 		async getSinoAccount({commit, state}, data={}) {
 			const res = await this._vm.$http.get('Market/moneyCenter3');
-			console.log(res)
+			// console.log(res)
 			if(res.data.code == 1) {
 				commit('setSinoAccount', res.data)
 			}

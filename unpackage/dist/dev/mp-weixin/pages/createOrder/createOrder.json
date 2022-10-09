@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "创建订单",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
-    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch"
-  }
-}

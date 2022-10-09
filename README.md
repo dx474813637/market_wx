@@ -2,6 +2,8 @@
 集成colorui，u-view组件库以及无痛刷新token的uni-app项目模板
 [](http://zc.toocle.com/User/index.html#/pages/sinopay_account/sinopay_account?type=1)
 [](http://zc.toocle.com/Muser/sino_zh1.html)
+10.9 -- 3h
+
 `news_list` 参数p
 `news_detail` 参数id
 `product_list` 参数p term（ 搜索关键字） tags（分类名称）
