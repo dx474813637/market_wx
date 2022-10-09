@@ -36,6 +36,7 @@ page {
 /* 图片加载中颜色 */
 .hq-header.data-v-1f694fa4 {
   background-color: #004b91;
+  min-height: 40px;
 }
 .hq-header.data-v-1f694fa4 .u-tab-bar {
   bottom: 4px;

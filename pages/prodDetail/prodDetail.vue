@@ -63,7 +63,7 @@
 			<view class="info-card">
 				<view class="info-row info-price">
 					<text class="price-dw">¥</text>
-					<text class="price">{{info.price}}</text>
+					<text class="price">{{info.price | isTalk}}</text>
 					<text class="price-dw">元{{info.unit ? '/'+info.unit :""}}</text>
 					<view class="discount-right">
 						<navigator url="/pages/discount/shopCoupon" class="discount-btn">旺铺优惠劵<u-icon name="arrow-right"></u-icon></navigator>
@@ -115,53 +115,9 @@
 		<view class="safe-area-inset-bottom"></view>
 		<u-popup v-model="wxShow" mode="top" safe-area-inset-bottom>
 			<view class="card-wrapper">
-				<card-seller :list="sellerInfo"></card-seller>
+				<card-seller :list="cpy"></card-seller>
 			</view>
 		</u-popup>
-		<!-- <view class="video-w safe-area-inset-bottom" v-if="live_src"> -->
-			<movable-area 
-				class="video-w safe-area-inset-bottom" 
-				v-if="live_src"
-				:style="{
-					'width': vWidth + 'rpx',
-					'height': movableH + 'px',
-				}" 
-				scale-area
-			>
-				<movable-view
-					class="video" 
-					:style="{
-						'width': vWidth + 'rpx',
-						'height': vHeight + 'rpx',
-						'pointer-events': 'auto'
-					}" 
-					@click="gotoLive"
-					direction="vertical"
-					inertia
-					:y="movableH*2 - vHeight + 'rpx'"
-					out-of-bounds
-					friction="4"
-				>
-					<video 
-						id="myVideo" 
-						:src="live_src"
-						@error="videoErrorCallback" 
-						:controls="false" 
-						autoplay 
-						poster="" 
-						style="width: 100%;height: 100%;"
-						object-fit="fill" 
-						@loadedmetadata="handleGetmeadata" 
-						:enable-progress-gesture="false"
-					></video>
-					<view class="video-label">
-						<u-icon name="quanping" custom-prefix="custom-icon"></u-icon>
-					</view>
-				</movable-view>
-			</movable-area>
-			
-			
-		<!-- </view> -->
 	</view>
 </template>
 
@@ -294,7 +250,7 @@
 				this.info = obj
 				this.share_title = res.data.share_title
 				this.share_img = res.data.share_img
-				this.sellerInfo = res.data.sell_cards
+				this.sellerInfo = res.data.company
 				this.sh = res.data.sh || 0
 				
 			},

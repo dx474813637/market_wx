@@ -52,7 +52,7 @@
   font-size: 28rpx;
   line-height: 1;
   margin: 0 10rpx;
-  color: #909399;
+  color: #909193;
 }
 .u-close-wrap.data-v-1a326067 {
   width: 40rpx;
@@ -64,7 +64,7 @@
   border-radius: 50%;
 }
 .u-placeholder-class.data-v-1a326067 {
-  color: #909399;
+  color: #909193;
 }
 .u-action.data-v-1a326067 {
   font-size: 28rpx;

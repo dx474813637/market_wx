@@ -4,17 +4,10 @@ import store from './store'
 import { http } from '@/common/service.js' // 全局挂载引入，配置相关在该index.js文件里修改
 import uView from "uview-ui";
 import filters from '@/static/js/filters.js'
-// import Json from './Json' //测试用数据
 Vue.use(uView);
 
 import navbar from './components/navbar.vue'
 Vue.component('nav-bar', navbar)
-
-// import TIM from '@/static/js/tim-wx.js'
-// import tim from '@/common/tim.js'
- 
-// Vue.prototype.$TIM = TIM
-// Vue.prototype.tim = tim
 
 Vue.config.productionTip = false
 

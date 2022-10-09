@@ -80,6 +80,15 @@ const toFixed2 = v => {
 	return v.toFixed(2)
 }
 
+const isTalk = v => {
+	let amount = v
+	if(amount <= 0 || amount === '0.00') {
+		return '议价'
+	} else {
+		return amount
+	}
+}
+
 //时间格式
 const timeFilter = v => {
 	if(!v) return null
@@ -131,5 +140,6 @@ export default {
 	moneyDwPoint,
 	wxBillState,
 	toFixed2,
-	buyGetType
+	buyGetType,
+	isTalk
 }

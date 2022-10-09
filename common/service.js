@@ -24,7 +24,7 @@ const getTokenStorage = () => {
 const http = new Request()
 
 const extConfig = uni.getExtConfigSync ? uni.getExtConfigSync():{}
-console.log(extConfig)
+// console.log(extConfig)
 // console.log(extConfig.attr.login)
 			
 uni.setStorageSync('xcx_login', extConfig.attr.login);

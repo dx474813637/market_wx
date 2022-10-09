@@ -1,6 +1,6 @@
 <template>
 	<view class="w">
-		<!-- <u-sticky> -->
+		<u-sticky>
 			<view class="sticky hq-header">
 				<u-tabs 
 					:list="tabs_list" 
@@ -13,7 +13,7 @@
 					height="90"
 				></u-tabs>
 			</view>
-		<!-- </u-sticky> -->
+		</u-sticky>
 		<view class="hq-content">
 			
 			<view class="hq-ppi-wrap" v-if="news.length > 0">
@@ -40,7 +40,7 @@
 				<u-empty text="暂无数据" mode="list" margin-top="60"></u-empty>
 			</template>
 		</view>
-		<nav-bar :tabbar="true"></nav-bar>
+		<nav-bar :tabbar="true" :index="6"></nav-bar>
 	</view>
 </template>
 
@@ -113,6 +113,7 @@
 <style scoped lang="scss">
 	.hq-header {
 		background-color: #004b91;
+		min-height: 40px;
 		/deep/ .u-tab-bar {
 			bottom: 4px;
 		}

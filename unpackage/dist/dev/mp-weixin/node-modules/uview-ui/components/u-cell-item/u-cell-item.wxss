@@ -67,7 +67,7 @@
   box-sizing: border-box;
   content: ' ';
   pointer-events: none;
-  border-bottom: 1px solid #e4e7ed;
+  border-bottom: 1px solid #dadbde;
   right: 0;
   left: 0;
   top: 0;
@@ -81,14 +81,14 @@
   margin-top: 6rpx;
   font-size: 26rpx;
   line-height: 36rpx;
-  color: #909399;
+  color: #909193;
   word-wrap: break-word;
 }
 .u-cell__value.data-v-2c031e35 {
   overflow: hidden;
   text-align: right;
   vertical-align: middle;
-  color: #909399;
+  color: #909193;
   font-size: 26rpx;
 }
 .u-cell__title.data-v-2c031e35,

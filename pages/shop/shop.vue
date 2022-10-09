@@ -14,44 +14,41 @@
 				</view>
 			</view>
 		</view>
-		<view class="list u-flex u-flex-wrap">
-			<view class="item" v-for="item in shop.product" :key="item.id" @click="handlePathDetail(item)">
-				<view class="grid-card">
-					<view class="card-img-w">
-						<view class="card-img">
-							<u-image width="100%" height="100%" :src="item.pic1"></u-image>
-						</view>
-				
-					</view>
-					<view class="card-info">
-						<view class="info-title">{{item.name}}</view>
-						<view class="info-sub">库存:{{item.stock}}{{item.unit}}</view>
-						<view class="info-price">
-							<!-- <view class="sold-num">库存:{{item.stock}}{{item.unit}}</view> -->
-							<view class="price item price-red">
-								<template v-if="item.price == '议价' ">
-									<text class="price-yj">议价</text>
-								</template>
-								<template v-else>
-									<text class="cheap-price-dw">¥</text>
-									<text class="price-big">{{item.price}}</text>
-								</template>
-								<!-- <text class="cheap-price-dw">券后价</text> -->
+		<view class="main u-p-20">
+			<view class="list bg-w u-flex u-flex-wrap" v-if="type == 1">
+				<view class="item" v-for="item in shop.product" :key="item.id" @click="handlePathDetail(item)">
+					<CardProductGrid :list="item"></CardProductGrid>
+				</view>
+			</view>
+			<view class="list bg-w style2" v-else>
+				<view class="item u-flex u-row-between u-border-bottom u-p-20" v-for="item in shop.product" :key="item.id" @click="handlePathDetail(item)">
+					<view class="item-left">
+						<view class="good-title">{{item.name}}</view>
+						<view class="good-bottom u-flex">
+							<view style="color: red;">
+								<text>¥</text>
+								<text class="price u-p-l-6">{{item.price}}</text>
 							</view>
-							<!-- <view class="in-cart-btn" @click.stop="inCart(item)">
-								<u-icon name="plus"></u-icon>
-							</view> -->
+							<view class="u-font-24 u-p-l-10">元/吨</view>
+						</view>
+					</view>
+					<view class="item-right">
+						<view  @click.stop="inCart(item)">
+							<u-icon name="shopping-cart" color="#f00" size="36"></u-icon>
 						</view>
 					</view>
 				</view>
 			</view>
+			<u-loadmore :status="loadStatus" margin-top="40" />
 		</view>
 		<nav-bar :tabbar="true"></nav-bar>
 	</view>
 </template>
 
 <script>
+	import mixShareInfo from '@/utils/mixShareInfo.js'
 	export default {
+		mixins: [mixShareInfo],
 		data() {
 			return {
 				shop: {
@@ -59,7 +56,14 @@
 					product: []
 				},
 				id: '',
+				type: 1,
+				loadStatus: 'loadmore',
+				p: 1,
+				endFlag: false,
 			};
+		},
+		onReachBottom() {
+			this.getNextData()
 		},
 		async onLoad(opt) {
 			if(opt.hasOwnProperty('id')) {
@@ -81,14 +85,39 @@
 			await this.getData()
 		},
 		methods: {
+			getNextData() {
+				if (this.endFlag || this.loadStatus == 'nomore') return
+				this.p = this.p + 1
+				this.getData()
+			},
 			async getData() {
-				let res = await this.$http.get('/Market/api.html?api_url_xcx=shop', {params: {id: this.id}})
+				this.endFlag = true
+				this.loadStatus = 'loading'
+				let res = await this.$http.get('/Market/api.html?api_url_xcx=shop', {
+					params: {
+						id: this.id,
+						p: this.p
+					},
+				})
 				uni.hideLoading()
+				this.endFlag = false
 				if(res.data.code == 1) {
-					this.shop = res.data
+					if(this.p == 1) {
+						this.shop = res.data
+					}else {
+						this.shop.product = [...this.shop.product, ...res.data.product]
+					}
+					
+					this.share_title = res.data.share_title
+					this.share_img = res.data.share_img
 					uni.setNavigationBarTitle({
 						title: this.shop.list.name
 					});
+					if(res.data.totalPages == this.p) {
+						this.loadStatus = 'nomore'
+					}else {
+						this.loadStatus = 'loadmore'
+					}
 				}
 				
 			},
@@ -97,10 +126,26 @@
 					url: `/pages/prodDetail/prodDetail?id=${obj.id}`,
 				})
 			},
+			async inCart(obj) {
+				uni.showLoading()
+				let res = await this.$http.get('/Market/api.html?api_url_xcx=productDetail_json', {
+					params: {
+						id: obj.id
+					}
+				})
+				
+				if(res.data.code == 1) {
+					this.$store.dispatch('addCart', res.data.list)
+				}
+			},
 		}
 	}
 </script>
-
+<style>
+	page {
+		background-color: #f8f8f8;
+	}
+</style>
 <style lang="scss" scoped>
 	.shop-header {
 		color: #999;
@@ -123,15 +168,27 @@
 				}
 			}
 		}
-		.shop-h-main {
-			
+		.shop-h-main {    
+			height: 20px;
+			line-height: 20px;
+			overflow: hidden;
 		}
 	}
 
-	
+	.bg-w{
+		background-color: #fff;
+	}
 	.list {
-	
+		
 		padding: 10rpx 15rpx 15rpx;
+		&.bg-w{
+			border-radius: 5px;
+		}
+		&.style2 {
+			.item {
+				width: 100%;
+			}
+		}
 		.item {
 			flex: 0 0 49%;
 			width: 49%;
@@ -139,7 +196,9 @@
 			&:nth-of-type(2n) {
 				margin-right: 0;
 			}
-			
+			&:last-child:after {
+				border-bottom: 0!important;
+			}
 		}
 		.grid-card {
 			margin-bottom: 20rpx;
@@ -216,6 +275,26 @@
 		}
 	
 	
+	}
+	.in-cart-btn {
+		margin-left: 10rpx;
+		height: 45rpx;
+		background-color: red;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 45rpx;
+		color: #fff;
+		border-radius: 50%;
+	}
+	.good-title {
+		font-size: 32rpx;
+		line-height: 25px;
+	}
+	.good-bottom {
+		.price {
+			font-size: 30rpx;
+		}
 	}
 	.info-price {
 		display: flex;

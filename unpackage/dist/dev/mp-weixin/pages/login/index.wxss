@@ -66,7 +66,7 @@
 }
 .wrap .content .getCaptcha.data-v-4586967a {
   background-color: #fdf3d0;
-  color: #909399;
+  color: #909193;
   border: none;
   font-size: 30rpx;
   padding: 12rpx 0;
@@ -101,7 +101,7 @@
 .wrap .buttom .hint.data-v-4586967a {
   padding: 20rpx 34rpx;
   font-size: 24rpx;
-  color: #909399;
+  color: #909193;
 }
 .wrap .buttom .hint .link.data-v-4586967a {
   color: #ff9900;

@@ -27,12 +27,16 @@
 							<!-- <view class="p-info-sub">{{ele.p_name}}</view> -->
 						</view>
 						<view class="p-info-money">
-							<view class="p-money">
-								<text class="price-dw">¥</text>
-								<text class="price-text">{{ele.single_price | moneyDwInt}}</text>
-								<text>.{{ele.single_price | moneyDwPoint}}</text>
-
-							</view>
+							<template v-if="ele.single_price == 0">
+								<text class="price-text">议价</text>
+							</template>
+							<template v-else>
+								<view class="p-money">
+									<text class="price-dw">¥</text>
+									<text class="price-text">{{ele.single_price | moneyDwInt}}</text>
+									<text>.{{ele.single_price | moneyDwPoint}}</text>
+								</view>
+							</template>
 							<view class="p-count">
 								<u-icon name="close" size="16"></u-icon>
 								<text>{{ele.number}}</text>

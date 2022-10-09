@@ -151,7 +151,7 @@
   justify-content: space-between;
   font-size: 24rpx;
   padding: 0 20rpx;
-  border-top: 1rpx dashed #e4e7ed;
+  border-top: 1rpx dashed #dadbde;
 }
 .jingdong .right .tips .transpond.data-v-7e5ca3f8 {
   margin-right: 10rpx;

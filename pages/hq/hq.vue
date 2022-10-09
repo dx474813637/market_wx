@@ -50,7 +50,7 @@
 				</navigator>
 			</view>
 		</view>
-		<nav-bar :tabbar="true"></nav-bar>
+		<nav-bar :tabbar="true" :index="5"></nav-bar>
 	</view>
 </template>
 

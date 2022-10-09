@@ -39,34 +39,7 @@
 					<CardProductCell :list="item"></CardProductCell>
 				</template>
 				<template v-slot:grid="{item}">
-					<view class="grid-card">
-						<view class="card-img-w">
-							<view class="card-img">
-								<u-image width="100%" height="100%" :src="item.pic1"></u-image>
-							</view>
-
-						</view>
-						<view class="card-info">
-							<view class="info-title">{{item.name}}</view>
-							<view class="info-sub">库存:{{item.stock}}{{item.unit}}</view>
-							<view class="info-price">
-								<!-- <view class="sold-num">库存:{{item.stock}}{{item.unit}}</view> -->
-								<view class="price item price-red">
-									<template v-if="item.price == '议价' ">
-										<text class="price-yj">议价</text>
-									</template>
-									<template v-else>
-										<text class="cheap-price-dw">¥</text>
-										<text class="price-big">{{item.price}}</text>
-									</template>
-									<!-- <text class="cheap-price-dw">券后价</text> -->
-								</view>
-								<view class="in-cart-btn" @click.stop="inCart(item)">
-									<u-icon name="plus"></u-icon>
-								</view>
-							</view>
-						</view>
-					</view>
+					<CardProductGrid :list="item"></CardProductGrid>
 				</template>
 			</list>
 
@@ -85,7 +58,7 @@
 								<view class="item-right">
 									<view class="u-font-24" @click="handleFilterMore(index, item.more)">
 										<text class="u-p-r-6">{{item.more ? '收起' : '展开'}}</text>
-										<u-icon size="24" :name="item.more ? 'minus' : 'plus'" ></u-icon>
+										<u-icon size="22" :name="item.more ? 'minus' : 'plus'" ></u-icon>
 									</view>
 								</view>
 							</view>
@@ -122,13 +95,6 @@
 </template>
 
 <script>
-	import {
-		List
-	} from '@/components/list/list.vue';
-	import {
-		CardProductCell
-	} from '@/components/CardProductCell/CardProductCell.vue'
-
 	import mixShareInfo from '@/utils/mixShareInfo.js'
 	export default {
 		mixins: [mixShareInfo],
@@ -153,10 +119,6 @@
 				// share_title: "",
 				// share_img: ""
 			}
-		},
-		components: {
-			List,
-			CardProductCell
 		},
 		// onShareTimeline(){
 		// 	return{
@@ -502,80 +464,7 @@
 
 		padding: 10rpx 15rpx 15rpx;
 
-		.grid-card {
-			margin-bottom: 20rpx;
-			width: 100%;
-			background-color: #fff;
-			overflow: hidden;
-			border-radius: 20rpx;
-			padding: 10rpx;
-
-			.card-img-w {
-				position: relative;
-				width: 100%;
-				padding-top: 100%;
-				border-radius: 14rpx;
-				overflow: hidden;
-
-				&::after {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: rgba(0, 0, 0, .1);
-					z-index: 20;
-				}
-
-				.card-img {
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-				}
-			}
-
-			.card-info {
-				padding: 10rpx 6rpx;
-
-				.info-title {
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					padding-bottom: 10rpx;
-					font-size: 30rpx;
-				}
-
-				.info-sub {
-					color: #ea8d00;
-					font-size: 24rpx;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-
-				.info-price {
-					display: flex;
-
-					justify-content: space-between;
-
-					.in-cart-btn {
-						margin-left: 10rpx;
-						height: 45rpx;
-						background-color: #aa55ff;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						width: 45rpx;
-						color: #fff;
-						border-radius: 50%;
-					}
-				}
-			}
-		}
-
+		
 
 	}
 

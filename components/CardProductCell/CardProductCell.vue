@@ -25,7 +25,7 @@
 				<view class="info-price bottom-right">
 					
 					<view class="price item price-red">
-						<template  v-if="list.price == '议价' ">
+						<template  v-if="list.price == 0 ">
 							<text class="price-yj">议价</text>
 						</template>
 						<template v-else>

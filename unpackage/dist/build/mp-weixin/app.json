@@ -18,7 +18,6 @@
     "pages/balance/bill",
     "pages/balance/billDetail",
     "pages/discount/shopCoupon",
-    "pages/live/live",
     "pages/login/index",
     "pages/login/code",
     "pages/follow/follow",
@@ -28,7 +27,8 @@
     "pages/loginBind/loginBind",
     "pages/ewm/ewm",
     "pages/hq/hq",
-    "pages/shop/shop"
+    "pages/shop/shop",
+    "pages/zt_one/zt_one"
   ],
   "subPackages": [],
   "window": {

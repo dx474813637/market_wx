@@ -246,7 +246,7 @@
 												<view class="p-name u-line-1">{{ele.pname}}</view>
 												<view class="p-sub u-line-1">{{ele.psub}}</view>
 												<view class="p-bottom u-flex u-row-between">
-													<view class="item-left">￥{{ele.price}}</view>
+													<view class="item-left">￥{{ele.price | isTalk}}</view>
 													<view class="item-right">
 														<u-button type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}" @click="handleProductBuyBtn(ele)">
 															<u-icon name="shopping-cart"></u-icon>
@@ -277,7 +277,7 @@
 														<view class="p-name u-line-1">{{ele.pname}}</view>
 														<view class="p-sub u-line-1">{{ele.psub}}</view>
 														<view class="p-bottom u-flex u-row-between">
-															<view class="item-left">￥{{ele.price}}</view>
+															<view class="item-left">￥{{ele.price | isTalk}}</view>
 															<view class="item-right">
 																<u-button type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}" @click="handleProductBuyBtn(ele)">
 																	<u-icon name="shopping-cart"></u-icon>
@@ -318,7 +318,7 @@
 											<view class="p-name u-line-1">{{ele.pname}}</view>
 											<view class="p-sub u-line-1">{{ele.psub}}</view>
 											<view class="p-bottom u-flex u-row-between">
-												<view class="item-left">￥{{ele.price}}</view>
+												<view class="item-left">￥{{ele.price | isTalk}}</view>
 												<view class="item-right">
 													<u-button type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}" @click="handleProductBuyBtn(ele)">
 														<u-icon name="shopping-cart"></u-icon>
@@ -355,7 +355,7 @@
 										<view class="p-name u-line-1">{{ele.pname}}</view>
 										<view class="p-sub u-line-1">{{ele.psub}}</view>
 										<view class="p-bottom u-flex u-row-between">
-											<view class="item-left">￥{{ele.price}}</view>
+											<view class="item-left">￥{{ele.price | isTalk}}</view>
 											<view class="item-right">
 												<u-button type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}" @click="handleProductBuyBtn(ele)">
 													<u-icon name="shopping-cart"></u-icon>
@@ -404,7 +404,7 @@
 												<view class="p-name u-line-1">{{ele.pname}}</view>
 												<view class="p-sub u-line-1">{{ele.psub}}</view>
 												<view class="p-bottom u-flex u-row-between">
-													<view class="item-left">￥{{ele.price}}</view>
+													<view class="item-left">￥{{ele.price | isTalk}}</view>
 													<view class="item-right">
 														<u-button @click="handleProductBuyBtn(ele)" type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}">
 															<u-icon name="shopping-cart"></u-icon>
@@ -435,7 +435,7 @@
 														<view class="p-name u-line-1">{{ele.pname}}</view>
 														<view class="p-sub u-line-1">{{ele.psub}}</view>
 														<view class="p-bottom u-flex u-row-between">
-															<view class="item-left">￥{{ele.price}}</view>
+															<view class="item-left">￥{{ele.price | isTalk}}</view>
 															<view class="item-right">
 																<u-button @click="handleProductBuyBtn(ele)" type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}">
 																	<u-icon name="shopping-cart"></u-icon>
@@ -476,7 +476,7 @@
 											<view class="p-name u-line-1">{{ele.pname}}</view>
 											<view class="p-sub u-line-1">{{ele.psub}}</view>
 											<view class="p-bottom u-flex u-row-between">
-												<view class="item-left">￥{{ele.price}}</view>
+												<view class="item-left">￥{{ele.price | isTalk}}</view>
 												<view class="item-right">
 													<u-button @click="handleProductBuyBtn(ele)" type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}">
 														<u-icon name="shopping-cart"></u-icon>
@@ -515,7 +515,7 @@
 										<view class="p-name u-line-1">{{ele.pname}}</view>
 										<view class="p-sub u-line-1">{{ele.psub}}</view>
 										<view class="p-bottom u-flex u-row-between">
-											<view class="item-left">￥{{ele.price}}</view>
+											<view class="item-left">￥{{ele.price | isTalk}}</view>
 											<view class="item-right">
 												<u-button type="primary" shape="circle" size="mini" :custom-style="{background: item.buy_btn_color}" @click="handleProductBuyBtn(ele)">
 													<u-icon name="shopping-cart"></u-icon>
@@ -762,7 +762,7 @@
 													<view class="p-content">
 														<view class="p-name u-line-2 " >{{prod.name}}</view>
 														<view class="p-bottom u-flex u-row-between">
-															<view class="item-left">￥{{prod.price}}</view>
+															<view class="item-left">￥{{prod.price | isTalk}}</view>
 															<view class="item-right"></view>
 														</view>
 													</view>

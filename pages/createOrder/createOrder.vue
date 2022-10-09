@@ -59,7 +59,7 @@
 					<text class="title clamp">{{item.name}}</text>
 					<text class="spec">品牌:{{item.brand}}; 规格:{{item.model}}</text>
 					<view class="price-box">
-						<text class="price">¥{{item.price}}</text>
+						<text class="price">¥{{item.price | isTalk}}</text>
 						<text class="number">x {{item.num}}</text>
 					</view>
 					
@@ -78,7 +78,7 @@
 					<text class="title clamp">{{item.name}}</text>
 					<text class="spec">品牌:{{item.brand}}; 规格:{{item.model}}</text>
 					<view class="price-box u-flex">
-						<text class="price">¥{{item.price}}</text>
+						<text class="price">¥{{item.price | isTalk}}</text>
 						<text class="number">x {{item.num}}</text>
 					</view>
 					<text class="spec" style="color: red;">[交收方式只允许自提]

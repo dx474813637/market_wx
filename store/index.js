@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { http } from '@/common/service.js' 
+import sinopay from '@/store/sinopay.js'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+	modules: { 
+		sinopay
+	},
     state: {
         /**
          * 是否需要强制登录

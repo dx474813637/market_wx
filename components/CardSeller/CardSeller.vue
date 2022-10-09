@@ -9,7 +9,7 @@
 				<view class="person-company">{{list.company}}</view>
 			</view>
 			<view class="person-avatar">
-				<view class="img-wrapper">
+				<view class="img-wrapper" v-if="list.mem_pic">
 					<u-image width="100%" height="100%" :src="list.mem_pic" ></u-image>
 				</view>
 			</view>

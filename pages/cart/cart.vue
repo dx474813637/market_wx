@@ -26,7 +26,7 @@
 							<view class="item-right">
 								<text class="clamp title">{{item.name}}</text>
 								<text class="attr">{{item.model}}</text>
-								<text class="price">¥{{item.price}}</text>
+								<text class="price">¥{{item.price | isTalk}}</text>
 								<uni-number-box 
 									class="step"
 									:min="1" 

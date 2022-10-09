@@ -18,7 +18,6 @@
     "pages/balance/bill",
     "pages/balance/billDetail",
     "pages/discount/shopCoupon",
-    "pages/live/live",
     "pages/login/index",
     "pages/login/code",
     "pages/follow/follow",
@@ -28,9 +27,37 @@
     "pages/loginBind/loginBind",
     "pages/ewm/ewm",
     "pages/hq/hq",
-    "pages/shop/shop"
+    "pages/shop/shop",
+    "pages/zt_one/zt_one"
   ],
-  "subPackages": [],
+  "subPackages": [
+    {
+      "root": "sinopay",
+      "pages": [
+        "money/index",
+        "money/sino_info",
+        "money/sino_zh1",
+        "money/sino_zh2",
+        "money/sino_cz",
+        "money/sino_cz_list",
+        "money/bill",
+        "money/bill_detail",
+        "money/safe_list",
+        "money/sino_loginpw_update",
+        "money/sino_paypw_set",
+        "money/sino_paypw_forget",
+        "money/sino_reg",
+        "money/sino_bind",
+        "money/card_add",
+        "money/bank_card",
+        "money/sino_cz_detail",
+        "money/bank_card_detail",
+        "money/sino_loginpw_forget",
+        "money/sino_acc_list",
+        "money/sino_zz_detail"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff",
@@ -38,6 +65,5 @@
   },
   "usingComponents": {
     "nav-bar": "/components/navbar"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

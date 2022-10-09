@@ -30,7 +30,7 @@
 					
 				</view>
 			</view>
-			<view class="vip-card-box" @click="navTo('/pages/balance/balanceCenter')">
+			<view class="vip-card-box" @click="navTo('/sinopay/money/index')">
 				<!-- <image class="card-bg" src="/static/img/bg-card.png" mode=""></image> -->
 				<view class="b-btn">
 					进入

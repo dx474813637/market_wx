@@ -7,13 +7,17 @@
 			<view class="news-source item-sub" v-if="list.source">来源：{{list.source}}</view>
 			<!-- <view class="news-author item-sub" v-if="list.author">作者：{{list.author}}</view> -->
 		</view>
-		<view class="news-content">
+		<view class="news-content" v-if="list.intro || list.content">
+			<!-- <rich-text
+				:nodes="`${list.intro || list.content}`"
+			></rich-text> -->
 			<u-parse 
 				ref="ctx"
 				:html="`${list.intro || list.content}`"
 				lazy-load
 				selectable
 				show-with-animation
+				:tag-style="tagStyle"
 			></u-parse>
 		</view>
 <!-- 		<view class="news-keywords">
@@ -45,12 +49,15 @@
 				list: {},
 				content: null,
 				tagStyle: {
-					h1: 'margin-bottom: 20rpx',
-					h2: 'margin-bottom: 20rpx',
-					h3: 'margin-bottom: 20rpx',
-					h4: 'margin-bottom: 20rpx',
-					p: 'line-height: 60rpx;font-size: 32rpx;margin-bottom: 20rpx',
-					image: 'margin-bottom: 20rpx'
+					h1: 'margin-bottom: 20rpx;font-size: 20px!important;',
+					h2: 'margin-bottom: 20rpx;font-size: 18px!important;',
+					h3: 'margin-bottom: 20rpx;font-size: 17px!important;',
+					h4: 'margin-bottom: 20rpx;font-size: 16px!important;',
+					ol: 'margin-bottom: 10rpx;font-size: 16px!important;list-style: none;padding: 0;',
+					ul: 'margin-bottom: 10rpx;font-size: 16px!important;list-style: none;padding: 0;',
+					li: 'margin-bottom: 10rpx;font-size: 16px!important;padding: 0;',
+					p: 'line-height: 28px;font-size: 16px!important;font-weight:300!important;margin-bottom: 20rpx',
+					image: 'margin-bottom: 20rpx',
 				},
 				type: 'news',
 				mode: 'event'
@@ -136,9 +143,16 @@
 				margin-right: 40rpx;
 			}
 		}
-		
 		.news-content {
 			padding: 0rpx 0 30rpx;
+			/deep/ {
+				rich-text,
+				._p,
+				.__p {
+					font-weight: 300!important;
+					font-size: 16px!important;
+				}
+			}
 		}
 		
 		.news-keywords {

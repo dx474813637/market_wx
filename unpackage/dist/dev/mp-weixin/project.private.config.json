@@ -1,270 +1,285 @@
 {
-  "setting": {},
-  "condition": {
-    "plugin": {
-      "list": []
+    "setting": {
+        "compileHotReLoad": false
     },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages/classify/classify",
-          "pathName": "pages/classify/classify",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/prodList/prodList",
-          "pathName": "pages/prodList/prodList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/prodDetail/prodDetail",
-          "pathName": "pages/prodDetail/prodDetail",
-          "query": "id=13",
-          "scene": null
-        },
-        {
-          "name": "pages/mine/mine",
-          "pathName": "pages/mine/mine",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/order/order",
-          "pathName": "pages/order/order",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/orderDetail/orderDetail",
-          "pathName": "pages/orderDetail/orderDetail",
-          "query": "id=1003166",
-          "scene": null
-        },
-        {
-          "name": "pages/discount/discount",
-          "pathName": "pages/discount/discount",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/address/address",
-          "pathName": "pages/address/address",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/cart/cart",
-          "pathName": "pages/cart/cart",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/createOrder/createOrder",
-          "pathName": "pages/createOrder/createOrder",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/createOrder/createOrder",
-          "pathName": "pages/createOrder/createOrder",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/userInfo/userInfo",
-          "pathName": "pages/userInfo/userInfo",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/discount/discount",
-          "pathName": "pages/discount/discount",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/money/pay",
-          "pathName": "pages/money/pay",
-          "query": "price=0.01&orderid=20",
-          "scene": null
-        },
-        {
-          "name": "pages/balance/balance",
-          "pathName": "pages/balance/balance",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/balance/balanceCenter",
-          "pathName": "pages/balance/balanceCenter",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/balance/bill",
-          "pathName": "pages/balance/bill",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/balance/billDetail",
-          "pathName": "pages/balance/billDetail",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/discount/shopCoupon",
-          "pathName": "pages/discount/shopCoupon",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/live/live",
-          "pathName": "pages/live/live",
-          "query": "roomid=1",
-          "scene": null
-        },
-        {
-          "name": "pages/liveList/liveList",
-          "pathName": "pages/liveList/liveList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/prodList/prodList2",
-          "pathName": "pages/prodList/prodList2",
-          "query": "roomid=3",
-          "scene": null
-        },
-        {
-          "name": "pages/login/index",
-          "pathName": "pages/login/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/login/code",
-          "pathName": "pages/login/code",
-          "query": "login=18757127948",
-          "scene": null
-        },
-        {
-          "name": "pages/address/addressManage",
-          "pathName": "pages/address/addressManage",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/userInfo/userInfo",
-          "pathName": "pages/userInfo/userInfo",
-          "query": "id=13",
-          "scene": null
-        },
-        {
-          "name": "pages/money/paySuccess",
-          "pathName": "pages/money/paySuccess",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/follow/follow",
-          "pathName": "pages/follow/follow",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/news/newsList",
-          "pathName": "pages/news/newsList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/news/newsDetail",
-          "pathName": "pages/news/newsDetail",
-          "query": "id=1",
-          "scene": null
-        },
-        {
-          "name": "pages/index/home",
-          "pathName": "pages/index/home",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/classify/classify2",
-          "pathName": "pages/classify/classify2",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/discount/couponShare",
-          "pathName": "pages/discount/couponShare",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/loginBind/loginBind",
-          "pathName": "pages/loginBind/loginBind",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/classify/classify2",
-          "pathName": "pages/classify/classify2",
-          "query": "memu_id=2",
-          "scene": null
-        },
-        {
-          "name": "pages/ewm/ewm",
-          "pathName": "pages/ewm/ewm",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/address/addressManage",
-          "pathName": "pages/address/addressManage",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/hq/hq",
-          "pathName": "pages/hq/hq",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/news/newsList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/login/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/shop/shop",
-          "query": "id=28",
-          "scene": null
+    "condition": {
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "pages/classify/classify",
+                    "pathName": "pages/classify/classify",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/prodList/prodList",
+                    "pathName": "pages/prodList/prodList",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/prodDetail/prodDetail",
+                    "pathName": "pages/prodDetail/prodDetail",
+                    "query": "id=13",
+                    "scene": null
+                },
+                {
+                    "name": "pages/mine/mine",
+                    "pathName": "pages/mine/mine",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/order/order",
+                    "pathName": "pages/order/order",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/orderDetail/orderDetail",
+                    "pathName": "pages/orderDetail/orderDetail",
+                    "query": "id=1003166",
+                    "scene": null
+                },
+                {
+                    "name": "pages/discount/discount",
+                    "pathName": "pages/discount/discount",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/address/address",
+                    "pathName": "pages/address/address",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/cart/cart",
+                    "pathName": "pages/cart/cart",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/createOrder/createOrder",
+                    "pathName": "pages/createOrder/createOrder",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/createOrder/createOrder",
+                    "pathName": "pages/createOrder/createOrder",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/userInfo/userInfo",
+                    "pathName": "pages/userInfo/userInfo",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/discount/discount",
+                    "pathName": "pages/discount/discount",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/money/pay",
+                    "pathName": "pages/money/pay",
+                    "query": "price=0.01&orderid=20",
+                    "scene": null
+                },
+                {
+                    "name": "pages/balance/balance",
+                    "pathName": "pages/balance/balance",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/balance/balanceCenter",
+                    "pathName": "pages/balance/balanceCenter",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/balance/bill",
+                    "pathName": "pages/balance/bill",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/balance/billDetail",
+                    "pathName": "pages/balance/billDetail",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/discount/shopCoupon",
+                    "pathName": "pages/discount/shopCoupon",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/live/live",
+                    "pathName": "pages/live/live",
+                    "query": "roomid=1",
+                    "scene": null
+                },
+                {
+                    "name": "pages/liveList/liveList",
+                    "pathName": "pages/liveList/liveList",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/prodList/prodList2",
+                    "pathName": "pages/prodList/prodList2",
+                    "query": "roomid=3",
+                    "scene": null
+                },
+                {
+                    "name": "pages/login/index",
+                    "pathName": "pages/login/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/login/code",
+                    "pathName": "pages/login/code",
+                    "query": "login=18757127948",
+                    "scene": null
+                },
+                {
+                    "name": "pages/address/addressManage",
+                    "pathName": "pages/address/addressManage",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/userInfo/userInfo",
+                    "pathName": "pages/userInfo/userInfo",
+                    "query": "id=13",
+                    "scene": null
+                },
+                {
+                    "name": "pages/money/paySuccess",
+                    "pathName": "pages/money/paySuccess",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/follow/follow",
+                    "pathName": "pages/follow/follow",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/news/newsList",
+                    "pathName": "pages/news/newsList",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/news/newsDetail",
+                    "pathName": "pages/news/newsDetail",
+                    "query": "id=1",
+                    "scene": null
+                },
+                {
+                    "name": "pages/index/home",
+                    "pathName": "pages/index/home",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/index/index",
+                    "pathName": "pages/index/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/classify/classify2",
+                    "pathName": "pages/classify/classify2",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/discount/couponShare",
+                    "pathName": "pages/discount/couponShare",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/loginBind/loginBind",
+                    "pathName": "pages/loginBind/loginBind",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/classify/classify2",
+                    "pathName": "pages/classify/classify2",
+                    "query": "memu_id=2",
+                    "scene": null
+                },
+                {
+                    "name": "pages/ewm/ewm",
+                    "pathName": "pages/ewm/ewm",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/address/addressManage",
+                    "pathName": "pages/address/addressManage",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/hq/hq",
+                    "pathName": "pages/hq/hq",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/news/newsList",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/login/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/shop/shop",
+                    "query": "id=28",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/zt_one/zt_one",
+                    "query": "id=2",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/mine/mine",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "sinopay/money/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                }
+            ]
         }
-      ]
-    }
-  }
+    },
+    "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+    "projectname": "market"
 }

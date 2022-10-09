@@ -163,34 +163,7 @@
 				"enablePullDownRefresh": false
 			}
 
-		}, {
-			"path": "pages/live/live",
-			"style": {
-				"navigationBarTitleText": "直播",
-				"enablePullDownRefresh": false,
-				"disableScroll": true
-			}
-
-		}
-		,
-		// {
-		//     "path" : "pages/live/live_play",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "直播",
-		//         "enablePullDownRefresh": false
-		//     }
-
-		// }
-
-		// , {
-		// 	"path": "pages/liveList/liveList",
-		// 	"style": {
-		// 		"navigationBarTitleText": "直播/回看列表",
-		// 		"enablePullDownRefresh": false
-		// 	}
-
-		// }, 
+		}, 
 		// {
 		// 	"path": "pages/prodList/prodList2",
 		// 	"style": {
@@ -295,28 +268,184 @@
             }
             
         }
+        ,{
+            "path" : "pages/zt_one/zt_one",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
-	// "subPackages": [
-	// 	{
-	// 		"root": "templateHome",
-	// 		"pages": [
-	// 			{
-	// 				"path": "index/home",
-	// 				"style": {
-	// 					"navigationBarTitleText": "首页",
-	// 					"enablePullDownRefresh": false
-	// 				}
+	"subPackages": [
+		{
+			"root": "sinopay",
+			"pages": [
+				{
+					"path": "money/index",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "资金中心",
+						"enablePullDownRefresh": false
+					}
 				
-	// 			}
-	// 		]
-	// 	}
-	// ],
-	// "preloadRule": {
-	// 	"pages/index/indextemplate": {
-	// 		"network": "all",
-	// 		 "packages": ["templateHome"]
-	// 	}
-	// },
+				}, {
+					"path": "money/sino_info",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "资金账号信息",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_zh1",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "付款账户",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_zh2",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "收款账户",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_cz",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white",
+						"navigationBarTitleText": "我要充值",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_cz_list",
+					"style": {
+						"navigationBarTitleText": "充提列表",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/bill",
+					"style": {
+						"navigationBarTitleText": "支付列表",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/bill_detail",
+					"style": {
+						"navigationBarTitleText": "支付详情",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/safe_list",
+					"style": {
+						"navigationBarTitleText": "安全设置",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_loginpw_update",
+					"style": {
+						"navigationBarTitleText": "修改资金账号登录密码",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_paypw_set",
+					"style": {
+						"navigationBarTitleText": "设置资金账号支付密码",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_paypw_forget",
+					"style": {
+						"navigationBarTitleText": "忘记资金账号支付密码",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_reg",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white"
+						// ,
+						// "navigationBarTitleText": "注册资金账户",
+						// "enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_bind",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white"
+					}
+				
+				}, {
+					"path": "money/card_add",
+					"style": {
+						"navigationBarTitleText": "银行卡绑定",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/bank_card",
+					"style": {
+						"navigationBarTitleText": "银行账户列表",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/sino_cz_detail",
+					"style": {
+						"navigationBarTitleText": "详情",
+						"enablePullDownRefresh": false
+					}
+				
+				}, {
+					"path": "money/bank_card_detail",
+					"style": {
+						"navigationBarTitleText": "银行卡详情",
+						"enablePullDownRefresh": false
+					}
+				
+				},  {
+					"path": "money/sino_loginpw_forget",
+					"style": {
+						"navigationBarTitleText": "重置资金登录密码",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "money/sino_acc_list",
+					"style": {
+						"navigationBarTitleText": "支付账号列表",
+						"enablePullDownRefresh": false
+					}
+
+				}, {
+					"path": "money/sino_zz_detail",
+					"style": {
+						"navigationBarTitleText": "同名账户转账详情",
+						"enablePullDownRefresh": false
+					}
+
+				}
+			]
+		}
+	], 
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#ffffff",
