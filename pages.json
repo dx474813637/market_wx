@@ -338,7 +338,8 @@
 					"path": "money/bill",
 					"style": {
 						"navigationBarTitleText": "支付列表",
-						"enablePullDownRefresh": false
+						"enablePullDownRefresh": true,
+						"onReachBottomDistance": 50
 					}
 				
 				}, {
@@ -404,7 +405,8 @@
 					"path": "money/bank_card",
 					"style": {
 						"navigationBarTitleText": "银行账户列表",
-						"enablePullDownRefresh": false
+						"enablePullDownRefresh": false,
+						"onReachBottomDistance": 50
 					}
 				
 				}, {

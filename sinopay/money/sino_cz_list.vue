@@ -14,54 +14,25 @@
 		</view>
 		
 		<view class="list">
-			<!-- <u-list
-				height="100%"
-				enableBackToTop
-				@scrolltolower="scrolltolower"
-				:preLoadingScreen="100"
+			<List
+				listType="dot"
+				:list="indexList"
+				emptyText="列表为空"
+				emptyMode="list"
+				:loadStatus="loadStatus"
 			>
-				<u-list-item
-					v-for="(item, index) in indexList"
-					:key="item.id"
-				>
-					<view class="u-p-10">
-						<CzCard 
+				<template v-slot:dot="{item}">
+					<view class="u-p-l-20 u-p-r-20 u-p-t-10 u-p-b-10">
+						<CzCard
 							v-if="tabs_list[tabs_current].value == 'cz' || tabs_list[tabs_current].value == 'tx'"
 							:detailData="item"
 							:type="tabs_list[tabs_current].value"
 							@detail="handleCzDetail"
 						></CzCard>
-						<txzzCard 
-							v-if="tabs_list[tabs_current].value == 'txzz' "
-							:detailData="item"
-							:type="tabs_list[tabs_current].value" 
-						></txzzCard>
-						<tmzzCard 
-							v-else-if="tabs_list[tabs_current].value == 'tmzz'"
-							:detailData="item"
-							:type="tabs_list[tabs_current].value" 
-							 @refresh="refreshList"
-						></tmzzCard>
 					</view>
 					
-				</u-list-item>
-				
-				<template name="dataStatus">
-					<template v-if="indexList.length == 0">
-						<u-empty
-							mode="data"
-							:icon="typeConfig.white.empty"
-						>
-						</u-empty>
-					</template>
-					<template v-else>
-						<u-loadmore
-							:status="loadstatus"
-						/>
-					</template>
 				</template>
-				
-			</u-list> -->
+			</List>  
 		</view>
 		
 	</view>
@@ -72,6 +43,7 @@
 	import CzCard from '@/sinopay/components/CzCard/CzCard.vue'
 	import tmzzCard from '@/sinopay/components/tmzzCard/tmzzCard.vue'
 	import txzzCard from '@/sinopay/components/txzzCard/txzzCard.vue'
+	import List from '@/components/list/list.vue'
 	export default {
 		data() {
 			return {
@@ -89,28 +61,28 @@
 				},
 				tabs_list: [
 					{
-						name: '提现记录',
+						name: '提现列表',
 						disabled: false,
 						value: 'tx',
-						func: 'sino_fund_refund_list_refund',
+						func: 'market/withdraw_list',
 					},
 					{
-						name: '网银充值记录',
+						name: '充值列表',
 						disabled: false,
 						value: 'cz',
-						func: 'sino_fund_account_list_charge', 
+						func: 'market/recharge_list', 
 					},
+					// {
+					// 	name: '同名账户转账',
+					// 	disabled: false,
+					// 	value: 'tmzz',
+					// 	func: 'sino_fund_account_list_tran',
+					// },
 					{
-						name: '同名账户转账',
-						disabled: false,
-						value: 'tmzz',
-						func: 'sino_fund_account_list_tran',
-					},
-					{
-						name: '提现卡转账',
+						name: '提现卡转账充值',
 						disabled: false,
 						value: 'txzz',
-						func: 'sino_fund_deposit_list_bind_deposit',
+						func: 'market/list_bind_deposit',
 					},
 				],
 				indexList: [],
@@ -144,7 +116,11 @@
 		components: {
 			CzCard,
 			tmzzCard,
-			txzzCard
+			txzzCard,
+			List
+		},
+		onReachBottom() {
+			this.scrolltolower()
 		},
 		methods: {
 			refreshList() {
@@ -167,7 +143,7 @@
 			},
 			async handleTabsChange(value) {
 				this.changeTabsStatus('disabled', true)
-				this.tabs_current = value.index
+				this.tabs_current = value
 				this.initParamas();
 				uni.showLoading();
 				await this.getData()
@@ -184,13 +160,13 @@
 				let params = {
 					p: this.curP
 				}
-				if(item.value == 'cz' || item.value == 'tx' || item.value == 'txzz') {
-					params.account_id = this.accId
-				} 
-				const res = await this.$api[func]({params})
-				if(res.code == 1) {
-					this.indexList = [...this.indexList, ...res.list]
-					if(this.indexList.length >= res.total) {
+				// if(item.value == 'cz' || item.value == 'tx' || item.value == 'txzz') {
+				// 	params.account_id = this.accId
+				// } 
+				const res = await this.$http.get(func, {params})
+				if(res.data.code == 1) { 
+					this.indexList = [...this.indexList, ...res.data.list.list]
+					if(this.curP >= res.data.list.pw_page_total) {
 						this.loadstatus = 'nomore'
 					}else {
 						this.loadstatus = 'loadmore'
@@ -213,16 +189,13 @@
 </script>
 <style lang="scss">
 	page {
-		background-color: $page-bg2;
-		height: 100vh;
+		background-color: $page-bg2; 
 	}
 </style>
 <style lang="scss" scoped>
-	.w {
-		height: 100%;
+	.w { 
 	}
-	.list {
-		height: calc(100% - 44px);
+	.list { 
 		
 	}
 </style>

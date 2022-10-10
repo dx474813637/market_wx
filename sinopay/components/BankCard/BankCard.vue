@@ -8,7 +8,7 @@
 			</view>
 			<view class="card-content">
 				<view class="bank-name u-line-1">{{bank_name}}</view>
-				<view class="card-sub u-line-1">{{bank_sub}}</view>
+				<!-- <view class="card-sub u-line-1">{{bank_sub}}</view> -->
 				<view class="card-num u-line-1">
 					{{bank_no.slice(0, bank_no.length - 4).replace(/[A-Za-z0-9]/g, '*')}}
 					{{bank_no.slice(bank_no.length - 4)}}

@@ -13,16 +13,18 @@
 					<view class="name">户名：{{detailData.bank_accname}}</view>
 				</view>
 				<view class="item u-flex u-flex-between u-flex-items-center u-m-b-30">
-					<view class="name text-base">资金账号：{{detailData.user_fundaccno}}</view>
+					<view class="name text-base" v-if="type == 'tx'">提现订单号：{{detailData.refund_id}}</view>
+					<view class="name text-base" v-if="type == 'cz'">充值单号：{{detailData.id}}</view>
 				</view>
 				<view class="item u-flex u-flex-between u-flex-items-center u-m-b-20">
 					<view class="pp u-flex u-flex-items-center">
 						<i class="custom-icon-moneybag custom-icon"></i>
-						<text>{{detailData.price/100}}</text>
+						<text class="u-m-l-20" v-if="type == 'tx'">{{detailData.amt}} 元</text>
+						<text class="u-m-l-20" v-if="type == 'cz'">{{detailData.amount}} 元</text>
 						<!-- <u--text mode="price" :text="detailData.price/100" type="error"></u--text> -->
 					</view>
 					<view class="pp">
-						<i class="custom-icon-right custom-icon" v-if="type == 'tx'"></i>
+						<i class="custom-icon-right custom-icon" ></i>
 					</view>
 				</view>
 				<view class="item u-flex u-flex-between u-flex-items-center ">
@@ -30,17 +32,10 @@
 						<i class="custom-icon-info custom-icon"></i>
 						<text class="u-p-l-6">{{detailData.ctime}}</text>
 					</view>
-					<view class="pp" :class="{
-						'text-error': detailData.state == 2,
-						'text-success': detailData.state == 1,
-						'text-primary': detailData.state == 3 || detailData.state == 10,
+					<view class="pp" :class="{ 
+						'text-success': detailData.status == 1, 
 					}"> 
-						<template v-if="type == 'tx'">
-							{{detailData.state | tixianState2Str}}
-						</template>
-						<template v-if="type == 'cz'">
-							{{detailData.state | wyczState2Str}}
-						</template>
+						{{detailData.status_name}}
 					</view>
 				</view>
 			</view>

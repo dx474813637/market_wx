@@ -149,10 +149,10 @@
 				}
 			},
 			end() {
-				this.$u.toast('倒计时结束');
+				// this.$u.toast('倒计时结束');
 			},
 			start() {
-				this.$u.toast('倒计时开始');
+				// this.$u.toast('倒计时开始');
 			},
 			submit() {
 				

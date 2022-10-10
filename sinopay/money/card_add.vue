@@ -8,34 +8,20 @@
 			labelWidth="100%"
 			labelPosition="top"
 			:labelStyle="{color: '#777'}"
-		>
-			<u-form-item
-				label="账户名"
-				prop="name"
-				ref="name"
-			>
-				<u-input
-					:value="model.name"
-					readonly
-					border="none" 
-					clearable
-				></u-input>
-			</u-form-item>
+		> 
 			<u-form-item
 				label="请输入卡号"
 				prop="bank_accno"
 				ref="bank_accno"
 				required
 			>
-				<!-- <view> -->
+				<view>
 					<u-input
 						v-model="model.bank_accno"
 						clearable
 						placeholder="请输入银行卡号"
-						border="bottom"
-					></u-input>
-					<!--
-						@change="$u.debounce(handleBankChange, 2500)" 
+						border="bottom" 
+					></u-input> 
 					<view class="u-p-t-20 u-flex u-flex-items-center "
 						:class="{
 							'text-error': isbankInfo.status == 'error',
@@ -46,48 +32,93 @@
 						<text class="u-p-l-20" v-if="!bankLoading">{{isbankInfo.name}}</text>
 						<u-loading mode="circle" v-else></u-loading>
 					</view>
-				</view> -->
+				</view>
 				
 			</u-form-item>
-			<u-form-item
-				label="社会信用统一代码"
-				prop="card_id"
-				ref="card_id"
-				required
-			>
-				<u-input
-					v-model="model.card_id"
-					border="bottom"
-					placeholder="请输入社会信用统一代码"
-					clearable
-				></u-input>
-			</u-form-item>
-			<u-form-item
-				label="法人姓名"
-				prop="legal_name"
-				ref="legal_name"
-				required
-			>
-				<u-input
-					v-model="model.legal_name"
-					border="bottom"
-					placeholder="请输入法人姓名"
-					clearable
-				></u-input>
-			</u-form-item>
-			<u-form-item
-				label="法人身份证"
-				prop="lecerti_code"
-				ref="lecerti_code"
-				required
-			>
-				<u-input
-					v-model="model.lecerti_code"
-					border="bottom"
-					placeholder="请输入法人身份证"
-					clearable
-				></u-input>
-			</u-form-item>
+			<template v-if="sino.list.sinop_type == 'C'">
+				<u-form-item
+					label="持卡人"
+					prop="bank_accname"
+					ref="bank_accname"
+					required
+				>
+					<u-input
+						v-model="model.bank_accname"
+						border="bottom"
+						placeholder="请输入持卡人"
+						clearable
+					></u-input>
+				</u-form-item>
+				<u-form-item
+					label="身份证"
+					prop="card_id"
+					ref="card_id"
+					required
+				>
+					<u-input
+						v-model="model.card_id"
+						border="bottom"
+						placeholder="请输入身份证"
+						clearable
+					></u-input>
+				</u-form-item>
+			</template>
+			<template v-else-if="sino.list.sinop_type == 'B'">
+				<u-form-item
+					label="公司户名"
+					prop="bank_accname"
+					ref="bank_accname"
+					required
+				>
+					<u-input
+						v-model="model.bank_accname"
+						border="bottom"
+						placeholder="请输入公司户名"
+						clearable
+					></u-input>
+				</u-form-item>
+				<u-form-item
+					label="社会信用统一代码"
+					prop="card_id"
+					ref="card_id"
+					required
+				>
+					<u-input
+						v-model="model.card_id"
+						border="bottom"
+						placeholder="请输入社会信用统一代码"
+						clearable
+					></u-input>
+				</u-form-item>
+				<u-form-item
+					label="法人姓名"
+					prop="legal_name"
+					ref="legal_name"
+					required
+				>
+					<u-input
+						v-model="model.legal_name"
+						border="bottom"
+						placeholder="请输入法人姓名"
+						clearable
+					></u-input>
+				</u-form-item>
+				<u-form-item
+					label="法人身份证"
+					prop="lecerti_code"
+					ref="lecerti_code"
+					required
+				>
+					<u-input
+						v-model="model.lecerti_code"
+						border="bottom"
+						placeholder="请输入法人身份证"
+						clearable
+					></u-input>
+				</u-form-item>
+			</template>
+			
+			
 			<u-form-item
 				label="手机号"
 				prop="mobile"
@@ -101,29 +132,11 @@
 						placeholder="请输入该卡在银行预留的手机号"
 						clearable
 					></u-input>
-					<view class="u-p-t-20 text-light2">手机号码必须与银行预留手机号一致，绑定后您的资金账户手机号码也会变成该手机号码</view>
+					<view class="u-p-t-20 text-light2" style="line-height: 20px">手机号码必须与银行预留手机号一致，绑定后您的资金账户手机号码也会变成该手机号码</view>
 				</view>
 			</u-form-item>
 			
-			<u-form-item
-				label="开户行"
-				prop="bank_name"
-				ref="bank_name"
-				required
-			>
-				<view @click="show = true">
-					<u-input
-						:value="model.bank_name"
-						readonly
-						border="bottom"
-						suffixIcon="arrow-down"
-						suffixIconStyle="color: #909399"
-						placeholder="点击搜索开户行"
-						clearable
-					></u-input>
-				</view>
-				
-			</u-form-item>
+			 
 		</u-form>
 		
 		<view class="u-p-t-20 u-m-b-40">
@@ -213,14 +226,13 @@
 				type: 'b',
 				from_wallet: 'B',
 				code: '',
-				model: {
-					account_id: '',
-					name: '',
-					bank_accno: '',
+				model: { 
+					bank_accname: '',
 					card_id: '',
+					bank_accno: '',
+					mobile: '',
 					legal_name: '',
 					lecerti_code: '',
-					mobile: '',
 					bank_name: ''
 				},
 				model_yanzheng: {
@@ -231,51 +243,9 @@
 				bankLoading: false,
 				isbankInfo: {
 					logo: 'https://65180.m.toocle.com/Public/nocard.png',
-					name: '',
+					name: '请输入正确卡号系统自动获取银行名称',
 					status: 'error'
-				},
-				rules: {
-					bank_accno: {
-						type: 'string',
-						required: true,
-						message: '请填写银行卡号',
-						trigger: ['blur', 'change']
-					}, 
-					card_id: {
-						type: 'string',
-						required: true,
-						message: '请填写社会信用统一代码',
-						trigger: ['blur', 'change']
-					}, 
-					legal_name: {
-						type: 'string',
-						required: true,
-						message: '请填写法人姓名',
-						trigger: ['blur', 'change']
-					}, 
-					lecerti_code: {
-						type: 'string',
-						validator: (rule, value, callback) => { 
-							return uni.$u.test.idCard(value)
-						},
-						message: '请填写正确的身份证',
-						trigger: ['blur', 'change']
-					}, 
-					mobile: {
-						type: 'string',
-						validator: (rule, value, callback) => { 
-							return uni.$u.test.mobile(value)
-						},
-						message: '请填写正确的手机号',
-						trigger: ['blur', 'change']
-					}, 
-					bank_name: {
-						type: 'string',
-						required: true,
-						message: '请匹配开户行',
-						trigger: ['blur', 'change']
-					}, 
-				},
+				}, 
 				rules_yanzheng: {
 					amt: {
 						type: 'string',
@@ -292,6 +262,11 @@
 				}
 			}
 		},
+		watch: {
+			['model.bank_accno'](n) {
+				uni.$u.debounce(this.handleBankChange, 1600)
+			}
+		},
 		onReady() {
 			this.$refs.from.setRules(this.rules)
 			this.$refs.from_yanzheng.setRules(this.rules_yanzheng)
@@ -299,11 +274,10 @@
 		computed: {
 			...mapState({ 
 				sino: state => state.sinopay.sino,
-				myCpy: state => state.user.myCpy,
-				sinoFund: state => state.sinopay.sinoFund,
+				sino_zh: state => state.sinopay.sino_zh,  
 			}),
 			textObj() {
-				if(this.type == 'c') {
+				if(this.sino.list.sinop_type == 'C') {
 					return {
 						title: '个人验证',
 						sub: '输入短信验证码'
@@ -315,16 +289,80 @@
 					}
 				}
 			},
-			
+			rules() {
+				let r = {
+					bank_accname: [{
+						required: true,
+						message: '账户名不能为空',
+						trigger: ['blur', 'change']
+					}, ],
+					card_id: [{
+						required: true,
+						message: '证件号码不能为空',
+						trigger: ['blur', 'change']
+					}, ],
+					bank_accno: [{
+						required: true,
+						message: '银行账户号不能为空',
+						trigger: ['blur', 'change']
+					}, ],
+					bank_name: [{
+						required: true,
+						message: '银行名不能为空',
+						trigger: ['change']
+					}, ],
+					mobile: [{
+						required: true,
+						message: '手机号不能为空',
+						trigger: ['blur', 'change']
+					}, ],
+				}
+				if (this.sino.list.sinop_type == 'B') {
+					r = {
+						...r,
+						legal_name: [{
+							required: true,
+							message: '法人姓名不能为空',
+							trigger: ['blur', 'change']
+						}, ],
+						lecerti_code: [{
+							required: true,
+							message: '法人身份证不能为空',
+							trigger: ['blur', 'change']
+						}, ],
+					}
+				}
+				return r
+			},
+			paramsObj() { 
+				let r = {
+					bank_accname: this.model.bank_accname,
+					card_id: this.model.card_id,
+					bank_accno: this.model.bank_accno,
+					mobile: this.model.mobile,
+					user_fundaccno: this.sino_zh[this.from_wallet].info.user_fundaccno,
+					bank_name: this.isbankInfo.name,
+				}
+				if (this.sino.list.sinop_type == 'B') {
+					r = {
+						...r,
+						legal_name: this.model.legal_name,
+						lecerti_code: this.model.lecerti_code,
+					}
+				}
+				return r
+			}
 		},
 		async onLoad(options) { 
 			if(options.hasOwnProperty('wallet')) {
 				this.from_wallet = options.wallet
 			}
-			this.model.account_id = this.sinoFund.filter(ele => ele.type == this.from_wallet)[0]?.id
-			this.model.name = this.myCpy.name
-			this.model.card_id = this.myCpy.credit_code
-			this.model.mobile = this.myCpy.mobile
+			this.model.bank_accname = this.sino.list.name
+			this.model.card_id = this.sino.list.bind_info.market_reg_no;
+			// this.model.account_id = this.sinoFund.filter(ele => ele.type == this.from_wallet)[0]?.id
+			// this.model.name = this.myCpy.name
+			// this.model.card_id = this.myCpy.credit_code
+			// this.model.mobile = this.myCpy.mobile
 		},
 		methods: {
 			// codeChange(text) {
@@ -398,34 +436,46 @@
 			},
 			submit() {
 				
-				this.$refs.from.validate().then(async res => {
-					uni.showLoading()
-					const r = await this.$api.sino_fund_account_bind({
-						params: {
-							...this.model
-						}
-					})
-					console.log(r)
-					if(r.code == 1) {
-						this.codeInputShow = true
-						this.model_yanzheng.id = r.id
-						uni.showToast({
-							title: r.msg,
-							icon: 'none'
+				this.$refs.from.validate(async res => {
+					if(res) {
+						uni.showLoading()
+						let func = 'market/bind_apply' 
+						const r = await this.$http.get( func, {
+							params: this.paramsObj
 						})
-						// this.$nextTick(() => {
-						// 	this.focus = true
-						// 	this.$refs.uCode.start();
-						// })
-						
-						// setTimeout(() => {
-						// 	uni.navigateBack()
-						// }, 800)
+						console.log(r)
+						if(r.data.code == 1) {
+							this.codeInputShow = true
+							this.model_yanzheng.id = r.data.bind_id
+							uni.showToast({
+								title: r.msg,
+								icon: 'none'
+							}) 
+						}
+					}else {
+						uni.$u.toast('校验失败')
 					}
-				}).catch(errors => {
-					uni.$u.toast('校验失败')
+					
+				}) 
+			},
+			async handleBankChange() {
+				// console.log(this.model.bank_accno)
+				if(!this.model.bank_accno) return
+				this.bankLoading = true
+				const res = await this.$http.get('market/sinopay_bank_name', {
+					params: {
+						no: this.model.bank_accno
+					}
 				})
-			}
+				this.bankLoading = false
+				if(res.data.code == 1) {
+					this.isbankInfo.name = res.data.list || ''
+					this.isbankInfo.logo = res.data.logo || ''
+				}else {
+					this.isbankInfo.name = '请输入正确卡号系统自动获取银行名称' 
+					this.isbankInfo.logo = 'https://65180.m.toocle.com/Public/nocard.png'
+				}
+			},
 		}
 	}
 </script>

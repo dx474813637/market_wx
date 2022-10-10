@@ -150,7 +150,7 @@
 		},
 		methods: {
 			async getData() {
-				const res = await this.$api.sino_fund_refund_detail_refund({
+				const res = await this.$http.get('market/recharge_detail', {
 					params: {
 						id: this.id
 					}
