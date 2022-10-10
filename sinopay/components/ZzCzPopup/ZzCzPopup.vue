@@ -40,7 +40,7 @@
 										 indicator
 										 indicatorMode="line"
 										 keyName="url" 
-										 height="70vw"
+										 height="500"
 										 interval="6000"
 										 imgMode="scaleToFill"
 										 @change="swiperChange"
@@ -56,7 +56,7 @@
 								 </view>
 							</view>
 							<view class="u-radius-10 bg-white uni-shadow-base u-m-b-20 boxbox">
-								<view class="header u-p-20 bg-primary u-flex u-flex-items-center u-flex-between">
+								<view class="header u-p-20 bg-grey u-flex u-flex-items-center u-flex-between">
 									<view class="item u-flex u-flex-items-center">
 										<i class="custom-icon-searchlist custom-icon text-primary"></i>
 										<text class="u-font-28 u-m-l-20">转账白名单-申请记录</text>
@@ -149,17 +149,17 @@
 				img_index: 0,
 				imgList: [
 					{
-						url: 'http://zc.toocle.com/Public/wp/img/bank-card-cz1.jpg',
+						image: 'http://zc.toocle.com/Public/wp/img/bank-card-cz1.jpg',
 						title: '以提现卡对应的手机号注册',
 						sub: '并登录，进入：商户专区',
 					},
 					{
-						url: 'http://zc.toocle.com/Public/wp/img/bank-card-cz2.jpg',
+						image: 'http://zc.toocle.com/Public/wp/img/bank-card-cz2.jpg',
 						title: '进入：转账白名单维护',
 						sub: '—>待确认页',
 					},
 					{
-						url: 'http://zc.toocle.com/Public/wp/img/bank-card-cz3.jpg',
+						image: 'http://zc.toocle.com/Public/wp/img/bank-card-cz3.jpg',
 						title: '对待确认记录，点击右上角的“添加”',
 						sub: '后续，白名单确认完成后，可进行转账充值',
 					},
@@ -211,7 +211,7 @@
 				this.loading = false
 			},
 			swiperChange(e) {   
-				this.img_index = e.current
+				this.img_index = e
 			},
 			copy(data) {
 				uni.setClipboardData({
@@ -260,6 +260,9 @@
 			width: 100%;
 			box-sizing: border-box;
 		}
+	}
+	.boxbox {
+		overflow: hidden;
 	}
 	.juzhong {
 		position: absolute;
