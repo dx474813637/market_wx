@@ -3,19 +3,15 @@
 		<view class="bg" :style="{
 			backgroundColor: configObj.themeColor
 		}"></view>
-		<u-navbar
-			bgColor="transparent"
-			:fixed="false"
+		<u-navbar 
+			:is-back="false"
+			:background="{ backgroundColor: 'transparent' }"
 		>
-			<view slot="left">
-				<view @click="handleGoto('/sinopay/money/index')" class="text-white u-flex u-flex-items-center">
-					<u-icon
-						name="arrow-left"
-						color="#fff"
-					></u-icon>
-					<text class="u-p-l-20 ">资金中心</text>
+			<view class="u-flex u-flex-items-center text-white u-m-l-30" >
+				<view class="u-flex u-flex-items-center" @click="handleGoto({url: '/sinopay/money/index', type: 'reLaunch'})"> 
+					<i class="custom-icon-back custom-icon"></i>
+					<text class="u-p-l-10">资金中心</text>
 				</view>
-				
 			</view>
 		</u-navbar>
 		<view class="main u-p-10 u-p-t-20">
@@ -39,18 +35,18 @@
 						label="资金账户" 
 						required
 					>
-						<view @click="showPicker">
+						<!-- <view @click="showPicker">
 							<u-input
 								:value="sino_acc"
 								readonly
 								suffixIcon="arrow-down"
 								suffixIconStyle="color: #bbb" 
 							></u-input>
-						</view>
-						
+						</view> -->
+						<view>{{sino_zh[from_wallet].info.user_fundaccno}}</view>
 					</u-form-item>
 					
-					<u-picker 
+					<!-- <u-picker 
 						:show="show_acc" 
 						ref="uPicker" 
 						closeOnClickOverlay
@@ -58,7 +54,7 @@
 						@confirm="confirm_acc" 
 						@close="show_acc = false" 
 						@cancel="show_acc = false" 
-						></u-picker>
+						></u-picker> -->
 					
 					<u-form-item
 						label="充值类型"
@@ -80,7 +76,7 @@
 							<view class="u-flex u-flex-items-center u-m-b-30">
 								<text class="text-light u-font-28">可提金额：</text>  
 								<view class="u-p-l-10" >
-									<text>{{sinoFund[index_acc].bal}}</text>
+									<text class="error-text">{{sino_zh[from_wallet].info.bal_refund}} 元</text>
 									<!-- <u--text color="#f00" mode="price" :text="sinoFund[index_acc].bal || 0"></u--text> -->
 								</view>
 								
@@ -100,6 +96,7 @@
 									suffixIconStyle="color: #bbb"
 									readonly
 								></u-input>
+								<view style="position: absolute;left: 0;top: 0;width: 100%;height: 100%; z-index: 50;"></view>
 								<view class="loading-w u-flex u-flex-items-center u-flex-center" v-if="bankLoading" >
 									<u-loading mode="circle" size="45"></u-loading>
 								</view>
@@ -191,7 +188,7 @@
 			</view>
 		</view>
 		<u-popup 
-			:show="bankPopup" 
+			v-model="bankPopup" 
 			@close="bankClose" 
 			@open="bankOpen"
 			mode="bottom"
@@ -202,25 +199,18 @@
 					<text>选择银行卡</text>
 					<i @click="refreshBankList" class="custom-icon-refresh custom-icon"></i>
 				</view>
-				<view class="wrapper-main">
-					
+				<scroll-view scroll-y class="wrapper-main"> 
 					<template v-if="bankLoading">
 						<view class="loading-w u-flex u-flex-items-center u-flex-center" :style="{
-							backgroundColor: typeConfig.white.mask,
+							backgroundColor: 'rgba(255,255,255,.3)',
 						}">
 							<u-loading mode="circle" size="45"></u-loading>
 						</view>
 					</template>
-					<!-- <u-list
-						height="100%" 
-						enableBackToTop
-						@scrolltolower="scrolltolower"
-						:preLoadingScreen="100"
-					>
-						<u-list-item
+					<view class="list">
+						<view class="list-item"
 							v-for="(item, index) in indexList"
-							:key="item.id"
-						>
+							:key="item.id">
 							<view class="u-p-10">
 								<BankCard
 									:bank_class="item.bank_class"
@@ -231,29 +221,9 @@
 									@detail="handleClick"
 								></BankCard> 
 							</view>
-							
-						</u-list-item> 
-					
-						<template name="dataStatus">
-							<template v-if="indexList.length == 0">
-								<template v-if="loadstatus == 'loading'">
-									<view class="u-p-80">
-										<u-loading mode="circle" size="45"></u-loading>
-									</view>
-								</template>
-								<template v-else>
-									<u-empty
-										mode="data"
-										:icon="typeConfig.white.empty"
-									>
-									</u-empty>
-								</template>
-								
-							</template>
-						</template>
-					
-					</u-list> -->
-				</view>
+						</view>
+					</view>
+				</scroll-view>
 				<view class="wrapper-footer">
 					<view @click="handleGoto({url: '/sinopay/money/card_add', params: { wallet: sinoFund[index_acc].type }})" class="footer-a u-flex u-flex-items-center u-flex-center">
 						<u-icon name="plus-circle-fill" color="#f00"></u-icon>
@@ -413,10 +383,10 @@
 			if(options.hasOwnProperty('wallet')) {
 				this.from_wallet = options.wallet
 			}
-			if(!this.sinoFund || this.sinoFund.length == 0) {
-				await this.getSinoFundAccount()
-			}
-			this.index_acc = this.sinoFund.findIndex(ele => ele.type == this.from_wallet)
+			// if(!this.sinoFund || this.sinoFund.length == 0) {
+			// 	await this.getSinoFundAccount()
+			// }
+			// this.index_acc = this.sinoFund.findIndex(ele => ele.type == this.from_wallet)
 			this.refreshBankList()
 		},
 		// watch: {
@@ -428,22 +398,21 @@
 		// 	}
 		// },
 		computed: {
-			...mapState({
-				typeConfig: state => state.theme.typeConfig,
-				sinoFund: state => state.sinopay.sinoFund,
+			...mapState({ 
+				sino_zh: state => state.sinopay.sino_zh,
 				sinoFundLoading: state => state.sinopay.sinoFundLoading,
 			}),
-			columns_acc() {
-				if(!this.sinoFund || this.sinoFund.length == 0) return [];
-				return [
-					this.sinoFund.map(ele => {
-						let label = '';
-						if(ele.type == 'S') label = '【收】'
-						else label = '【付】'
-						return `${label}${ele.user_fundaccno}-${ele.name}`
-					})
-				]
-			},
+			// columns_acc() {
+			// 	if(!this.sinoFund || this.sinoFund.length == 0) return [];
+			// 	return [
+			// 		this.sinoFund.map(ele => {
+			// 			let label = '';
+			// 			if(ele.type == 'S') label = '【收】'
+			// 			else label = '【付】'
+			// 			return `${label}${ele.user_fundaccno}-${ele.name}`
+			// 		})
+			// 	]
+			// },
 			tmzzData() {
 				if(!this.sinoFund || this.sinoFund.length == 0) return {};
 				return {
@@ -643,15 +612,15 @@
 				}
 			},
 			async getBankCard() {
-				if( this.cz == '2') return
+				// if( this.cz == '2') return
 				// this.loadstatus = 'loading'
-				const res = await this.$api.sino_fund_account_list_bind({
+				const res = await this.$http.get('market/recharge2', {
 					params: {
-						account_id: this.sinoFund[this.index_acc].id
+						user_fundaccno: this.sino_zh.B.info.user_fundaccno
 					}
 				})
-				if(res.code == 1) {
-					this.indexList = res.list.filter(ele => ele.state == '1')
+				if(res.data.code == 1) {
+					this.indexList = res.data.lista.filter(ele => ele.state == '1')
 					 
 				}
 			},

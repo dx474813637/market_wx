@@ -35,7 +35,7 @@
 					<moneyCard sinoType="S"></moneyCard>
 				</view>
 				<view class="main-list">
-					<view @click="handleGoto({url: '/sinopay/money/bank_card', params: {wallet: 'S'}})" class="list-item">
+					<!-- <view @click="handleGoto({url: '/sinopay/money/bank_card', params: {wallet: 'S'}})" class="list-item">
 						<view class="item-left">
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">
 								<i class="custom-icon-vipcard custom-icon"></i>
@@ -45,18 +45,18 @@
 						<view class="item-right">
 							<i class="custom-icon-right custom-icon"></i>
 						</view>
-					</view>
-					<view @click="handleGoto({url: '/sinopay/money/sino_cz_list', params: {wallet: 'S'}})" class="list-item">
+					</view> -->
+					<!-- <view @click="handleGoto({url: '/sinopay/money/sino_cz_list', params: {wallet: 'S'}})" class="list-item">
 						<view class="item-left">
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">
 								<i class="custom-icon-searchlist custom-icon"></i>
 							</view>
-							<view class="text-base item-t">充值 / 提现 / 转账记录</view>
+							<view class="text-base item-t">充值 / 提现 记录</view>
 						</view>
 						<view class="item-right">
 							<i class="custom-icon-right custom-icon"></i>
 						</view>
-					</view>
+					</view> -->
 					<view @click="handleGoto('/sinopay/money/sino_zh1')" class="list-item">
 						<view class="item-left">
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">

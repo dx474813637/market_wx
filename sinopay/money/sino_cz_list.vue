@@ -14,7 +14,37 @@
 		</view>
 		
 		<view class="list">
-			<List
+			<template v-if="indexList.length > 0">
+				<view 
+					class="list-item"
+					v-for="(item, index) in indexList"
+					:key="item.id"
+				>
+					<view>
+						<view class="u-p-l-20 u-p-r-20 u-p-t-10 u-p-b-10">
+							<CzCard
+								v-if="tabs_list[tabs_current].value == 'cz' || tabs_list[tabs_current].value == 'tx'"
+								:detailData="item"
+								:type="tabs_list[tabs_current].value"
+								@detail="handleCzDetail"
+							></CzCard>
+						</view>
+					</view>
+					
+				</view>
+				<u-loadmore 
+					:status="loadStatus" 
+					:icon-type="iconType" 
+					:load-text="loadText" 
+					margin-top="20"
+					margin-bottom="20"
+					color="#999"
+				/>
+			</template>
+			<template v-else>
+				<u-empty :text="emptyText" :mode="emptyMode" :margin-top="emptymarginTop"></u-empty>
+			</template>
+			<!-- <List
 				listType="dot"
 				:list="indexList"
 				emptyText="列表为空"
@@ -32,7 +62,7 @@
 					</view>
 					
 				</template>
-			</List>  
+			</List>  -->
 		</view>
 		
 	</view>
@@ -78,17 +108,23 @@
 					// 	value: 'tmzz',
 					// 	func: 'sino_fund_account_list_tran',
 					// },
-					{
-						name: '提现卡转账充值',
-						disabled: false,
-						value: 'txzz',
-						func: 'market/list_bind_deposit',
-					},
+					// {
+					// 	name: '提现卡转账充值',
+					// 	disabled: false,
+					// 	value: 'txzz',
+					// 	func: 'market/list_bind_deposit',
+					// },
 				],
 				indexList: [],
 				curP: 1,
 				loadstatus: 'loadmore',
 				codeInputShow: false,
+				iconType: 'flower',
+				loadText: {
+					loadmore: '轻轻上拉',
+					loading: '努力加载中',
+					nomore: '我也是有底线的'
+				}
 			};
 		},
 		onLoad(options) {
@@ -105,13 +141,12 @@
 			this.getData()
 		},
 		computed: {
-			...mapState({
-				typeConfig: state => state.theme.typeConfig,
-				sinoFund: state => state.sinopay.sinoFund,
+			...mapState({ 
+				sino_zh: state => state.sinopay.sino_zh,
 			}),
-			accId() {
-				return this.sinoFund.filter(ele => ele.type == this.type)[0]?.id
-			}
+			// accId() {
+			// 	return this.sinoFund.filter(ele => ele.type == this.type)[0]?.id
+			// }
 		},
 		components: {
 			CzCard,
@@ -178,10 +213,10 @@
 				this.curP ++
 				await this.getData()
 			},
-			handleCzDetail({id}) {
-				if(this.tabs_current != 0) return
+			handleCzDetail({id, refund_id, quick_id}) {
+				// if(this.tabs_current != 0) return
 				uni.navigateTo({
-					url: `/sinopay/money/sino_cz_detail?id=${id}`
+					url: `/sinopay/money/sino_cz_detail?id=${refund_id || quick_id}&type=${this.tabs_list[this.tabs_current].value}`
 				})
 			}, 
 		}

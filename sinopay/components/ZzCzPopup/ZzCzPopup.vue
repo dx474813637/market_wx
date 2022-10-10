@@ -1,34 +1,26 @@
 <template>
 	<view class="">
 		<u-popup
-			:show="show" 
+			v-model="show" 
 			mode="bottom"  
 			@close="close"
-			@open="open"
-			round="25"
-			bgColor="#fff"
+			@open="open" 
 			>
-			<view class="wrapper" :style="{
-				backgroundColor: themeConfig.pageBg,
-				color: themeConfig.baseText,
-			}">
-				<view class="header u-p-18"  :style="{
-					backgroundColor: themeConfig.navBg,
-				}">
+			<view class="wrapper" >
+				<view class="header u-p-18" >
 					<view class="title-bar u-p-20 u-flex u-flex-between u-flex-items-center u-font-30">
 						<view class="item u-flex-1 u-text-center">
 							<text class="u-font-32">转账充值流程</text>
 						</view>
 					</view>
 				</view>
-				<view class="main" :style="{
-					backgroundColor: themeConfig.pageBg,
-				}">
-					<!-- <u-list height="100%">
+				<scroll-view scroll-y class="main" :style="{
+					backgroundColor: '#f8f8f8',
+				}"> 
 						<view class="u-p-20">
 							<view class="u-radius-10 bg-white uni-shadow-base u-p-20 u-flex u-flex-items-center u-m-b-20">
 								<view class="item">
-									<u--image src="http://zc.toocle.com/Public/wp/img/yd1.png" mode="aspectFit" width="60" height="60"></u--image>
+									<u-image src="http://zc.toocle.com/Public/wp/img/yd1.png" mode="aspectFit" width="60" height="60"></u-image>
 								</view>
 								<view class="item u-m-l-20">
 									<view class="u-font-28 u-m-b-10">手机端下载并安装“平安数字口袋APP” </view>
@@ -64,7 +56,7 @@
 								 </view>
 							</view>
 							<view class="u-radius-10 bg-white uni-shadow-base u-m-b-20 boxbox">
-								<view class="header u-p-20 bg-grey u-flex u-flex-items-center u-flex-between">
+								<view class="header u-p-20 bg-primary u-flex u-flex-items-center u-flex-between">
 									<view class="item u-flex u-flex-items-center">
 										<i class="custom-icon-searchlist custom-icon text-primary"></i>
 										<text class="u-font-28 u-m-l-20">转账白名单-申请记录</text>
@@ -88,7 +80,7 @@
 											<view class="item u-flex u-flex-items-center u-m-b-20" v-for="(item, index) in deposit_white_list.list_binds" :key="item.id">
 												<view class="u-font-28 text-base" style="flex: 0 0 100px">{{item.user_fundaccno}}</view>
 												<view class="u-font-28 u-flex-1 u-text-center">{{item.bank_accno}}</view>
-												<view class="u-font-28 u-text-right text-primary" style="flex: 0 0 90px">{{item.qingfen_state | qingfen_state2Str}}</view>
+												<view class="u-font-28 u-text-right " style="flex: 0 0 90px; color: #007aff">{{item.qingfen_state | qingfen_state2Str}}</view>
 											</view> 
 										</view>
 										<view class="" v-else>
@@ -142,9 +134,8 @@
 									 </view>
 								 </view>
 							</view>
-						</view>
-					</u-list> -->
-				</view>
+						</view> 
+				</scroll-view>
 			</view>
 		</u-popup>
 	</view>
@@ -173,7 +164,7 @@
 						sub: '后续，白名单确认完成后，可进行转账充值',
 					},
 				], 
-				deposit_white_list: [],
+				deposit_white_list: {},
 				loading: false
 			}
 		},
@@ -186,9 +177,8 @@
 			}
 		},
 		computed: {
-			...mapState({
-				typeConfig: state => state.theme.typeConfig,
-				sinoFund: state => state.sinopay.sinoFund,
+			...mapState({ 
+				sino_zh: state => state.sinopay.sino_zh,
 			}),
 		},
 		props: {
@@ -215,8 +205,7 @@
 			close() {
 				this.$emit('close')
 			},
-			async open() {
-				if(!this.aid) return
+			async open() { 
 				this.loading = true
 				await this.getData() 
 				this.loading = false
@@ -233,11 +222,12 @@
 				});
 			},
 			async getData() {
-				const res = await this.$api.sino_fund_deposit_white_list({params: {
-					account_id: this.aid
+				const res = await this.$http.get('market/bankcard', {params: {
+					user_fundaccno: this.sino_zh.B.info.user_fundaccno,
+					cate: 3
 				}})
-				if(res.code == 1) {
-					this.deposit_white_list = res.list.result
+				if(res.data.code == 1) {
+					this.deposit_white_list = res.data.list.result
 				}
 			},
 		}

@@ -3,10 +3,43 @@
 		 <view class="main">
 			<view class="main-header">
 				<view class="header-title u-flex u-flex-items-center u-flex-center">
-					<view>{{list.state | tixianState2Str}}</view>
+					<view v-if="type == 'cz'">
+						<template v-if="list.status == 0">
+							待验证
+						</template>
+						<template v-else-if="list.status == 1">
+							充值成功
+						</template>
+						<template v-else-if="list.status == 2">
+							充值失败
+						</template>
+						<template v-else-if="list.status == 3">
+							充值中
+						</template>
+						<template v-else-if="list.status == 4">
+							已退款
+						</template>
+					</view>
+					<view v-if="type == 'tx'">
+						<template v-if="list.status == 0">
+							待验证
+						</template>
+						<template v-else-if="list.status == 1">
+							提现成功
+						</template>
+						<template v-else-if="list.status == 2">
+							提现失败
+						</template>
+						<template v-else-if="list.status == 3">
+							提现中
+						</template>
+						<template v-else-if="list.status == 4">
+							已退款
+						</template>
+					</view>
 				</view>
 				<view class="header-content u-flex u-flex-items-center u-flex-center">
-					<view>{{list.Sino_fund_refund.price1}} 元</view>
+					<view>{{list.amount || list.amt}} 元</view>
 				</view>
 			</view>
 			<view class="main-content">
@@ -15,15 +48,15 @@
 						<view>现金账号：</view>
 					</view>
 					<view class="item-right">
-						<view>{{list.Sino_fund_refund.user_fundaccno}}</view>
+						<view>{{list.user_fundaccno}}</view>
 					</view>
 				</view>
-				<view class="row u-flex u-flex-between u-flex-items-center">
+				<view class="row u-flex u-flex-between u-flex-items-center" v-if="type == 'tx'">
 					<view class="item-left">
 						<view>银行卡：</view>
 					</view>
 					<view class="item-right">
-						<view>{{list.Sino_fund_refund.bank_accno1}}</view>
+						<view>{{list.bank_accno}}</view>
 					</view>
 				</view>
 				<view class="row u-flex u-flex-between u-flex-items-center">
@@ -31,7 +64,7 @@
 						<view>金额：</view>
 					</view>
 					<view class="item-right">
-						<view>{{list.Sino_fund_refund.price1}} 元</view>
+						<view>{{list.amount || list.amt}} 元</view>
 					</view>
 				</view>
 				<view class="row u-flex u-flex-between u-flex-items-center">
@@ -39,17 +72,9 @@
 						<view>手续费：</view>
 					</view>
 					<view class="item-right">
-						<view>{{list.Sino_fund_refund.fee1}} 元</view>
+						<view>{{list.fee}} 元</view>
 					</view>
-				</view>
-				<view class="row u-flex u-flex-between u-flex-items-center">
-					<view class="item-left">
-						<view>状态：</view>
-					</view>
-					<view class="item-right">
-						<view>{{list.state | tixianState2Str}}</view>
-					</view>
-				</view>
+				</view> 
 				<view class="row u-flex u-flex-between u-flex-items-center">
 					<view class="item-left">
 						<view>时间：</view>
@@ -58,7 +83,7 @@
 						<view>{{list.ctime}}</view>
 					</view>
 				</view>
-				<view class="u-p-t-40" v-if="list.state == '0'">
+				<!-- <view class="u-p-t-40" v-if="list.state == '0'">
 					<view class="u-p-t-20">
 						<u-button type="primary" @click="codeInputShow = true">提现校验</u-button>
 					</view>
@@ -66,7 +91,7 @@
 						<u-button type="error" @click="remove">取消提现</u-button>
 					</view>
 					
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<u-modal :show="codeInputShow" negativeTop="220" title="支付密码校验"
@@ -117,6 +142,7 @@
 		data() {
 			return {
 				id: '',
+				type: 'tx',
 				list: {
 					Sino_fund_refund: {}
 				},
@@ -129,7 +155,10 @@
 		onLoad(options) {
 			if(options.hasOwnProperty('id')) {
 				this.id =  options.id
-			} 
+			}   
+			if(options.hasOwnProperty('type')) {
+				this.type =  options.type
+			}   
 			uni.showLoading()
 			this.getData()
 		},
@@ -150,13 +179,17 @@
 		},
 		methods: {
 			async getData() {
-				const res = await this.$http.get('market/recharge_detail', {
+				let func = 'market/withdraw_detail';
+				if(this.type == 'cz') {
+					func = 'market/recharge_detail'
+				}
+				const res = await this.$http.get(func, {
 					params: {
 						id: this.id
 					}
 				})
-				if(res.code == 1) {
-					this.list = res.list
+				if(res.data.code == 1) {
+					this.list = res.data.list
 				}
 			},
 			async remove() {

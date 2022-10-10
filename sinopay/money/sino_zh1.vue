@@ -49,7 +49,7 @@
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">
 								<i class="custom-icon-searchlist custom-icon"></i>
 							</view>
-							<view class="text-base item-t">充值 / 提现 / 转账记录</view>
+							<view class="text-base item-t">充值 / 提现 记录</view>
 						</view>
 						<view class="item-right">
 							<i class="custom-icon-right custom-icon"></i>
