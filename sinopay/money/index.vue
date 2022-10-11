@@ -68,7 +68,7 @@
 			
 		</view>
 		<u-popup 
-			:show="show" 
+			v-model="show" 
 			@close="close" 
 			@open="open" 
 			mode="center" 
@@ -82,11 +82,11 @@
 					</view>
 					<view class="header-title">您还未开通或绑定资金账号</view>
 				</view>
-				<view class="wrap-content">
+				<view class="wrap-content u-p-b-40">
 					<view class="content u-flex u-flex-column u-flex-items-center">
 						<view class="warning">请准备好</view>
-						<view>企业信息</view>
-						<view>企业开户账号</view>
+						<view>身份信息/企业信息</view>
+						<view>银行卡号/企业开户账号</view>
 						<view class="handle-box u-flex u-flex-column u-flex-items-center">
 							<view @click="handleGoto('/sinopay/money/sino_reg')" class="handle-btn reg">开通资金账号</view>
 							<view @click="handleGoto('/sinopay/money/sino_bind')" class="handle-btn">绑定已有资金账号</view>
@@ -139,6 +139,7 @@
 			uni.showLoading()
 			await getUserCard()
 			await this.getSinoAccount() 
+			// this.show = true
 			if(this.sino.State == 1) {
 				this.show = true
 			} else {
@@ -169,6 +170,9 @@
 <style lang="scss">
 	page {
 		background-color: $page-bg2;
+	}
+	/deep/ .u-mode-center-box {
+		background-color: transparent!important;
 	}
 </style>
 <style lang="scss" scoped>
@@ -296,13 +300,13 @@
 					background-image: url("https://wx.rawmex.cn/Public/bg2.png");
 					background-size: 100%;
 					.bg {
-						height: 40px;
+						height: 20px;
 						img {
 							height: 100%;
 						}
 					}
 					.header-title {
-						padding-bottom: 30px;
+						padding-bottom: 10px;
 					}
 				}
 				.header-title {

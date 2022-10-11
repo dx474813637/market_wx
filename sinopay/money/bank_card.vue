@@ -239,8 +239,10 @@
 							}
 							uni.showLoading()
 							const r = await this.$http.get(func, {
-								user_fundaccno: this.sino_zh.B.user_fundaccno,
-								bind_id: data.id
+								params: {
+									user_fundaccno: this.wallet.user_fundaccno,
+									bind_id: data.id
+								}
 							})
 							if(r.data.code == 1) {
 								uni.showToast({

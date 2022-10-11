@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<u-popup
-			v-model="show" 
+			v-model="zzshow" 
 			mode="bottom"  
 			@close="close"
 			@open="open" 
@@ -147,6 +147,7 @@
 		data() {
 			return { 
 				img_index: 0,
+				zzshow: false,
 				imgList: [
 					{
 						image: 'http://zc.toocle.com/Public/wp/img/bank-card-cz1.jpg',
@@ -195,8 +196,10 @@
 				default: 'B'
 			}
 		},  
-		mounted() {
-			
+		watch: {
+			show(n) {
+				this.zzshow = n
+			}
 		},
 		methods: {
 			...mapMutations({

@@ -28,8 +28,8 @@ let state = {
 			state.sinoFund = []
 			state.sino = {}
 			state.sino_zh = {
-				user_fundaccno_b: {}, 
-				user_fundaccno_s: {}, 
+				B: {}, 
+				S: {}, 
 			} 
 			uni.setStorageSync('sino', {})
 		},

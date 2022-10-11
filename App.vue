@@ -3,6 +3,7 @@
 	import {
 		mapState
 	} from 'vuex';
+	import routingIntercept from '@/common/permission.js'
 	export default {
 		onLaunch: async function(options) {
 			// this.$store.commit("isEwmFunc")
@@ -44,6 +45,7 @@
 					}
 				});
 			}
+			routingIntercept(this)
 			
 			// const res = await this.$http.get('home_cate')
 			// if (res.data.code == 1) {

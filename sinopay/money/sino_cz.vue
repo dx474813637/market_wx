@@ -4,6 +4,7 @@
 			backgroundColor: configObj.themeColor
 		}"></view>
 		<u-navbar 
+			:is-fixed="false"
 			:is-back="false"
 			:background="{ backgroundColor: 'transparent' }"
 		>
@@ -232,7 +233,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-modal :show="codeInputShow" negativeTop="220" title="输入支付密码"  
+		<u-modal v-model="codeInputShow" negativeTop="220" title="输入支付密码"  
 			showCancelButton
 			cancelText="返回资金中心"
 			cancelColor="#999"
@@ -275,7 +276,7 @@
 		<!-- 
 			closeOnClickOverlay
 			@close="codeInputShow_code = false" -->
-		<u-modal :show="codeInputShow_code" negativeTop="220" title="短信验证码校验" 
+		<u-modal v-model="codeInputShow_code" negativeTop="220" title="短信验证码校验" 
 			showCancelButton
 			cancelText="返回资金中心"
 			cancelColor="#999"
@@ -283,10 +284,10 @@
 			:confirmText="`账户${configObj.label}列表`" 
 			@confirm="handleGoZz"
 			>
-			<view class="slot-content u-p-t-10">
-				<view class="u-m-b-20 text-light2 u-font-28">
+			<view class="slot-content u-p-40">
+				<!-- <view class="u-m-b-20 text-light2 u-font-28">
 					如跳过当前步骤，后续可在同名账户{{configObj.label}}列表中验证
-				</view>
+				</view> -->
 				<u-form
 					:model="model_yanzheng_code"
 					:rules="rules_yanzheng_code"
@@ -305,22 +306,7 @@
 							v-model="model_yanzheng_code.captcha" 
 							placeholder="短信验证码"
 							clearable
-						>
-							<!-- <template slot="suffix">
-								<u-code
-									ref="uCode"
-									@change="codeChange"
-									seconds="60"
-									changeText="X秒重新获取"
-								></u-code>
-								<u-button
-									@tap="getCode"
-									:text="tips"
-									type="success"
-									size="mini"
-								></u-button>
-							</template> -->
-						</u-input> 
+						></u-input> 
 					</u-form-item>
 				</u-form> 
 				<view class="u-m-t-40">
@@ -438,7 +424,7 @@
 							trigger: ['blur', 'change']
 						},{
 							validator: (rule, value, callback) => {
-								return value >= 0.01 && value <= Number(this.sinoFund[this.index_acc].bal)
+								return value >= 0.01 && value <= Number(this.sino_zh[this.from_wallet].info.bal_refund)
 							},
 							message: '金额数值必须大于等于0.01且小于等于账户余额'
 						}],
@@ -496,22 +482,26 @@
 						title: '我要充值',
 						label: '充值',
 						themeColor: '#d34c3c',
+						value: 'cz',
 						sub: '',
 						func_getbankcard: 'sino_fund_account_list_bind',
 						func_sxf: '',
-						func_create: '',
+						func_create: 'market/quick_apply',
 						func_paypwd: '',
+						func_code: 'market/success_recharge',
 					}
 				}
 				else if(this.cz == 0){
 					return {
 						title: '提现申请',
 						label: '提现',
+						value: 'tx',
 						themeColor: '#408df4',
 						sub: '提现提前绑定好提现银行卡，且有可提余额。',
 						func_getbankcard: 'sino_fund_account_list_bind',
 						func_sxf: 'sino_fund_refund_fee_fund_count',
-						func_create: 'sino_fund_refund_create',
+						func_create: 'market/refund_apply',
+						func_code: 'market/success_withdraw',
 						func_paypwd: 'sino_fund_refund_refund',
 					}
 				}
@@ -525,6 +515,23 @@
 						func_code: 'sino_fund_account_tran', 
 					}
 				}
+			}, 
+			paramsObj() {
+				let w = this.sino_zh[this.from_wallet]
+				let obj = {
+					user_fundaccno: w.info.user_fundaccno,
+					amount: this.model.money,
+					amt: this.model.money,
+					remark: this.model.bz
+				}
+				let type = w.sinopay_type
+				if (type == 'C') {
+					obj.bind_id = this.model.bank_accid 
+					obj.bank_accno = this.model.bank_accid  
+				} else if (type == 'B') {
+					obj.type = this.model.czlx 
+				}
+				return obj
 			}
 		},
 		onReady() {
@@ -616,7 +623,7 @@
 				// this.loadstatus = 'loading'
 				const res = await this.$http.get('market/recharge2', {
 					params: {
-						user_fundaccno: this.sino_zh.B.info.user_fundaccno
+						user_fundaccno: this.sino_zh[this.from_wallet].info.user_fundaccno
 					}
 				})
 				if(res.data.code == 1) {
@@ -647,26 +654,31 @@
 			},
 			handleGoZz() {
 				uni.redirectTo({
-					url: '/sinopay/money/sino_cz_list?tabs_current=2' 
+					url: `/sinopay/money/sino_cz_detail?type=${this.configObj.value}&id=${this.model_yanzheng_code.id}`
 				})
 			},
 			submit_yanzheng_code() {
-				this.$refs.from_yanzheng_code.validate().then(async () => {
-					uni.showLoading()
-					const r = await this.$api.sino_fund_account_tran({
-						params: {
-							id: this.model_yanzheng_code.id,
-							captcha: this.model_yanzheng_code.captcha, 
-							flag: 2,
-						}
-					})
-					if(r.code == 1) { 
-						this.showToast({
-							type: 'success',
-							message: r.msg, 
+				this.$refs.from_yanzheng_code.validate(async (res) => {
+					if(res) {
+						uni.showLoading()
+						const r = await this.$http.get( this.configObj.func_code, {
+							params: {
+								user_fundaccno: this.sino_zh[this.from_wallet].info.user_fundaccno,
+								refund_id: this.model_yanzheng_code.id,
+								mobile_code: this.model_yanzheng_code.captcha,  
+							}
 						})
-						this.codeInputShow_code = false
-						this.handleGoZz()
+						if(r.data.code == 1) { 
+							this.showToast({
+								type: 'success',
+								message: r.data.msg, 
+							})
+							this.codeInputShow_code = false
+							this.handleGoZz()
+						}
+					}
+					else {
+						uni.$u.toast('校验失败')
 					}
 				})
 			},
@@ -692,64 +704,68 @@
 					}
 				})
 			},
-			submit() {
-				
-				this.$refs.form.validate().then(async res => { 
+			submit() { 
+				this.$refs.form.validate(async res => { 
 					console.log(res)
-					let params = {}
-					if(this.cz == '2') {
-						params = {
-							b_user_fundaccno: this.tmzzData.from.user_fundaccno,
-							s_user_fundaccno: this.tmzzData.to.user_fundaccno,
-							price: this.model.money,
-							remark: this.model.bz,
+					if(res) {
+						// let params = {}
+						// if(this.cz == '2') {
+						// 	params = {
+						// 		b_user_fundaccno: this.tmzzData.from.user_fundaccno,
+						// 		s_user_fundaccno: this.tmzzData.to.user_fundaccno,
+						// 		price: this.model.money,
+						// 		remark: this.model.bz,
+						// 	}
+						// }else {
+						// 	params = {
+						// 		account_id: this.sinoFund[this.index_acc].id,
+						// 		bank_accid: this.model.bank_accid,
+						// 		price: this.model.money,
+						// 		remark: this.model.bz
+						// 	}
+						// }
+						uni.showLoading()
+						const r = await this.$http.get( this.configObj.func_create, {params: this.paramsObj})
+						// const r = {
+						// 	code: 1,
+						// 	msg: '测试成功'
+						// }
+						console.log(r)
+						if(r.data.code == 1) {
+							this.model_yanzheng_code.id = r.data.refund_id
+							this.codeInputShow_code = true 
+							// if(this.cz != '2') {
+							// 	this.model_yanzheng.id = r.data.refund_id
+							// 	this.codeInputShow = true
+							// 	uni.showToast({
+							// 		title: r.data.msg,
+							// 		icon: 'none'
+							// 	})
+							// }else {
+								
+								// uni.showModal({
+								// 	title: '提示',
+								// 	content: '创建转账订单成功！是否立即发送验证短信？',
+								// 	success: async (res) => {
+								// 		if (res.confirm) {
+								// 			this.codeInputShow_code = true 
+								// 			await this.getCode()
+											
+								// 		} else if (res.cancel) {
+								// 			uni.redirectTo({
+								// 				url: '/sinopay/money/index'
+								// 			})
+								// 		}
+								// 	}
+								// });  
+							// }
 						}
-					}else {
-						params = {
-							account_id: this.sinoFund[this.index_acc].id,
-							bank_accid: this.model.bank_accid,
-							price: this.model.money,
-							remark: this.model.bz
-						}
+					} 
+					else { 
+						uni.$u.toast('校验失败')
 					}
-					uni.showLoading()
-					const r = await this.$api[this.configObj.func_create]({params})
-					// const r = {
-					// 	code: 1,
-					// 	msg: '测试成功'
-					// }
-					console.log(r)
-					if(r.code == 1) {
-						if(this.cz != '2') {
-							this.model_yanzheng.id = r.list.id
-							this.codeInputShow = true
-							uni.showToast({
-								title: r.msg,
-								icon: 'none'
-							})
-						}else {
-							this.model_yanzheng_code.id = r.list.id
-							uni.showModal({
-								title: '提示',
-								content: '创建转账订单成功！是否立即发送验证短信？',
-								success: async (res) => {
-									if (res.confirm) {
-										this.codeInputShow_code = true 
-										await this.getCode()
-										
-									} else if (res.cancel) {
-										uni.redirectTo({
-											url: '/sinopay/money/index'
-										})
-									}
-								}
-							});  
-						}
-					}
-				}).catch(errors => {
-					console.log(errors)
-					uni.$u.toast('校验失败')
-				})
+					
+				}) 
 			},  
 			codeChange(text) {
 				this.tips = text;
@@ -784,7 +800,7 @@
 			handleClick(bank) {
 				console.log(bank)
 				this.bank.name = `${bank.bank_accno}-${bank.bank_name}`
-				this.model.bank_accid = bank.id
+				this.model.bank_accid = bank.bank_accno
 				this.bankClose()
 			},
 			handleBack() {

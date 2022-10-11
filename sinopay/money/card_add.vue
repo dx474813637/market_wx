@@ -143,16 +143,16 @@
 			<u-button type="primary" @click="submit">提交表单</u-button>
 		</view>
 		
-		<menusPopupBank 
+		<!-- <menusPopupBank 
 			:show="show" 
 			theme="white" 
 			showMode="list"
 			@close="show = false"
 			@confirm="menusConfirm"
 		></menusPopupBank>
+		 -->
 		
-		
-		<u-modal :show="codeInputShow" negativeTop="220" :title="textObj.title"
+		<u-modal v-model="codeInputShow" negativeTop="220" :title="textObj.title"
 			showCancelButton
 			cancelText="账户银行卡列表"
 			cancelColor="#999"
@@ -160,10 +160,7 @@
 			confirmText="当前银行卡详情" 
 			@confirm="handleBackDetail"
 			>
-			<view class="slot-content u-p-t-10">
-				<view class="u-m-b-20 text-light2 u-font-28">
-					如跳过当前步骤，后续可在账户银行卡详情中填写此次弹窗表单
-				</view>
+			<view class="slot-content u-p-30">
 				<u-form
 					:model="model_yanzheng"
 					:rules="rules_yanzheng"
@@ -173,36 +170,33 @@
 					:labelStyle="{color: '#777'}"
 				>
 					<u-form-item
-						label="鉴权验证金额"
+						label="验证金额"
 						prop="amt"
 						ref="amt"
 						required 
+						v-if="sino.list.sinop_type == 'B'"
 					>
 						<view>
 							<u-input
 								v-model="model_yanzheng.amt" 
-								placeholder="鉴权验证金额"
+								placeholder="验证金额"
 								clearable
 							></u-input>
-							<view class="u-font-28 u-info u-m-t-10">鉴权有效时间是48小时</view>
+							<view class="u-font-28 u-info u-m-t-10">有效时间是48小时</view>
 						</view>
 					</u-form-item>
 					<u-form-item
-						label="鉴权验证码"
+						label="验证码"
 						prop="code"
 						ref="code"
 						required 
 					>
-						<view>
+						<view class="u-flex u-flex-items-center u-flex-between">
 							<u-input
 								v-model="model_yanzheng.code" 
-								placeholder="鉴权验证码"
+								placeholder="验证码"
 								clearable
-							></u-input>
-							<view class="u-font-28 u-m-t-10">
-								<text class="u-info">如长时间未收到鉴权验证码，可点击取消该鉴权任务，重新发起绑定</text>
-								<text class="text-error u-m-l-10" @click="check_cancel">点我取消鉴权</text>
-							</view>
+							></u-input> 
 						</view>
 					</u-form-item>
 				</u-form> 
@@ -275,7 +269,10 @@
 			...mapState({ 
 				sino: state => state.sinopay.sino,
 				sino_zh: state => state.sinopay.sino_zh,  
-			}),
+			}), 
+			wallet() { 
+				return this.sino_zh[this.from_wallet].info || {}
+			},
 			textObj() {
 				if(this.sino.list.sinop_type == 'C') {
 					return {
@@ -370,7 +367,7 @@
 			// },
 			menusConfirm(data) {
 				this.model.bank_name = data.bank_name 
-				this.$refs.from.validateField('bank_name')
+				// this.$refs.from.validateField('bank_name')
 			},
 			handleBack() {
 				uni.redirectTo({
@@ -413,26 +410,43 @@
 				});
 			},
 			submit_yanzheng() {
-				this.$refs.from_yanzheng.validate().then(async res => {
-					uni.showLoading()
-					const r = await this.$api.sino_fund_account_check({
-						params: {...this.model_yanzheng}
-					})
-					console.log(r)
-					if(r.code == 1) { 
-						uni.showToast({
-							title: r.msg,
-							icon: 'none',
-							success: () => {
-								uni.redirectTo({
-									url: '/sinopay/money/bank_card_detail?id=' + this.model_yanzheng.id
-								})
+				this.$refs.from_yanzheng.validate(async res => {
+					if(res) {
+						uni.showLoading()
+						let paramsObj = {
+							user_fundaccno: this.wallet.user_fundaccno,
+							bind_id: this.model_yanzheng.id
+						}
+						if(this.sino.list.sinop_type == 'C') {
+							paramsObj = {
+								...paramsObj,
+								mobile_code: this.model_yanzheng.code
 							}
-						})
+						}else if(this.sino.list.sinop_type == 'B') {
+							paramsObj = {
+								...paramsObj,
+								mobile_code: this.model_yanzheng.code,
+								amt: this.model_yanzheng.amt
+							}
+						}
+						const r = await this.$http.get( 'market/success_rz_sinopay', {params: paramsObj})
+						console.log(r)
+						if(r.data.code == 1) { 
+							uni.showToast({
+								title: r.data.msg,
+								icon: 'none',
+								success: () => {
+									uni.redirectTo({
+										url: `/sinopay/money/bank_card_detail?bid=${this.model_yanzheng.id}&aid=${this.wallet.user_fundaccno}`  
+									})
+								}
+							})
+						}
+					}else {
+						uni.$u.toast('校验失败')
 					}
-				}).catch(errors => {
-					uni.$u.toast('校验失败')
-				})
+					
+				})  
 			},
 			submit() {
 				
@@ -448,7 +462,7 @@
 							this.codeInputShow = true
 							this.model_yanzheng.id = r.data.bind_id
 							uni.showToast({
-								title: r.msg,
+								title: r.data.msg,
 								icon: 'none'
 							}) 
 						}

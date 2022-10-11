@@ -1,18 +1,15 @@
 <template>
 	<view class="w u-p-20">
-		<u-navbar
-			bgColor="transparent"
-			:fixed="false"
+		<u-navbar 
+			:is-fixed="false"
+			:is-back="false"
+			:background="{ backgroundColor: 'transparent' }"
 		>
-			<view slot="left">
-				<view @click="handleGoto('/sinopay/money/index')" class="text-white u-flex u-flex-items-center">
-					<u-icon
-						name="arrow-left"
-						color="#fff"
-					></u-icon>
-					<text class="u-p-l-20 ">资金中心</text>
+			<view class="u-flex u-flex-items-center text-white u-m-l-30" >
+				<view class="u-flex u-flex-items-center" @click="handleGoto({url: '/sinopay/money/index', type: 'reLaunch'})"> 
+					<i class="custom-icon-back custom-icon"></i>
+					<text class="u-p-l-10">资金中心</text>
 				</view>
-				
 			</view>
 		</u-navbar>
 		
@@ -25,113 +22,86 @@
 			</view> -->
 			<view class="form-w u-p-20 u-p-l-40 u-p-r-40 u-m-t-30">
 				<u-form
-					labelPosition="left"
-					:model="model"
-					:rules="rules"
+					labelPosition="top"
+					:model="model" 
 					ref="userform"
-					labelWidth="90"
-					borderBottom
-					:labelStyle="{fontSize: '28rpx'}"
+					labelWidth="140" 
+					:labelStyle="{fontSize: '28rpx', lineHeight: '18px'}"
 				>
 					<u-form-item
 						label="用户类型"
-						@click="showActions"
-						ref="item1"
-						borderBottom
+						:borderBottom="false"
+							required
+						ref="item1" 
 					>
-						<u-input
-							v-model="userType"
-							disabled
-							disabledColor="#ffffff"
-							placeholder="请选择用户类型"
-							border="none"
-						></u-input>
+						<view class="u-p-10 u-flex u-flex-between u-flex-items-center" @click="showActions">
+							<view class="">
+								{{userType}}
+							</view>
+							<u-icon name="arrow-down"></u-icon>
+							<!-- <u-input
+								v-model="userType"
+								disabled
+								disabledColor="#ffffff"
+								placeholder="请选择用户类型"
+								border="none"
+							></u-input> -->
+						</view>
+						
 						<!-- <u-icon
 							slot="right"
 							name="arrow-right"
 						></u-icon> -->
 					</u-form-item>
 					<u-action-sheet
-						:show="showUserType"
-						:actions="userActions"
+						v-model="showUserType"
+						:list="userActions"
 						title="请选择用户类型"
 						@close="showUserType = false"
-						@select="userTypeSelect"
+						@click="userTypeSelect"
 					>
 					</u-action-sheet>
 					<u-form-item
-						borderBottom
-						label="企业名称" 
-					>
-						<view>{{myCpy.name}}</view>
-						<!-- <u-input
-							border="none"
-							:value="myCpy.name"
-							readonly
-							placeholder="企业名称"
-							clearable
-						></u-input> -->
-					</u-form-item>
-					<u-form-item
-						label="信用统一代码"
-						borderBottom 
-					>
-						<u-input
-							border="none"
-							readonly
-							:value="myCpy.credit_code"
-							placeholder="信用统一代码" 
-						></u-input>
-					</u-form-item>
-					<u-form-item
-						borderBottom
+						:borderBottom="false"
 						label="sinopay账号"
-						prop="base.sinopay"
+						prop="sinopay"
+							required
 						ref="base_sinopay"
 					>
 						<u-input
-							v-model="model.base.sinopay"
+							v-model="model.sinopay"
 							placeholder="sinopay账号"
 							border="none"
 							clearable
 						></u-input>
 					</u-form-item>
 					<u-form-item
-						borderBottom
+						:borderBottom="false"
 						label="sinopay密码"
-						prop="base.sinopay_pwd"
+						prop="sinopay"
+							required
 						ref="base_sinopay_pwd"
-					>	
-						<u-input
-							v-model="model.base.sinopay_pwd"
-							placeholder="sinopay密码"
-							border="none"
-							password
-							clearable
-						></u-input>
-					</u-form-item>
-					<u-form-item
-						borderBottom
-						label="备注"
-						prop="base.remark"
-						ref="base_remark"
 					>
 						<u-input
-							v-model="model.base.remark" 
+							v-model="model.sinopay_pwd"
+							placeholder="sinopay密码"
 							border="none"
+							type="password"
 							clearable
 						></u-input>
 					</u-form-item>
+					
 					<template v-if="userType == '个人'">
 						
-						<!-- <u-form-item
-							borderBottom
+						<u-form-item
+							:borderBottom="false"
 							label="姓名"
-							prop="userInfo.name"
+							prop="name"
+							required
 							ref="userInfo_name"
 						>
 							<u-input
-								v-model="model.userInfo.name"
+								v-model="model.name"
 								placeholder="姓名"
 								border="none"
 								clearable
@@ -139,28 +109,30 @@
 						</u-form-item>
 						<u-form-item
 							label="身份证"
-							borderBottom
-							prop="userInfo.id"
+							:borderBottom="false"
+							prop="id"
+							required
 							ref="userInfo_id"
 						>
 							<u-input
-								v-model="model.userInfo.id"
+								v-model="model.id"
 								placeholder="身份证"
 								border="none"
 								clearable
 							></u-input>
-						</u-form-item> -->
+						</u-form-item>
 					</template>
 					<template v-if="userType == '个体工商户'">
 						
-						<!-- <u-form-item
-							borderBottom
+						<u-form-item
+							:borderBottom="false"
 							label="姓名"
-							prop="userInfo2.name"
+							prop="name"
+							required
 							ref="userInfo_name"
 						>
 							<u-input
-								v-model="model.userInfo2.name"
+								v-model="model.name"
 								placeholder="姓名"
 								border="none"
 								clearable
@@ -168,51 +140,52 @@
 						</u-form-item>
 						<u-form-item
 							label="身份证"
-							borderBottom
-							prop="userInfo2.id"
+							:borderBottom="false"
+							prop="id"
+							required
 							ref="userInfo_id"
 						>
 							<u-input
-								v-model="model.userInfo2.id"
+								v-model="model.id"
 								placeholder="身份证"
 								border="none"
 								clearable
 							></u-input>
-						</u-form-item> -->
-						
+						</u-form-item> 
 					</template>
 					
 					<template v-else-if="userType == '企业'">
 						
-						<!-- <u-form-item
-							borderBottom
-							label="企业名称"
-							prop="cpyInfo.name"
-							ref="cpyInfo_name"
+						<u-form-item
+							:borderBottom="false"
+							label="企业名称" 
+							prop="cpyname"
+							ref="cpyInfo_cpyname"
+							required
 						>
 							<u-input
 								border="none"
-								v-model="model.cpyInfo.name"
+								v-model="model.cpyname"
+								readonly
 								placeholder="企业名称"
 								clearable
 							></u-input>
 						</u-form-item>
 						<u-form-item
 							label="信用统一代码"
-							borderBottom
-							prop="cpyInfo.id"
-							ref="cpyInfo_id"
+							:borderBottom="false" 
+							prop="cpyid"
+							ref="cpyInfo_cpyid"
+							required
 						>
 							<u-input
 								border="none"
-								v-model="model.cpyInfo.id"
-								placeholder="信用统一代码"
-								clearable
+								readonly
+								v-model="model.cpyid"
+								placeholder="信用统一代码" 
 							></u-input>
-						</u-form-item> -->
-						
-					</template>
-					
+						</u-form-item> 
+					</template> 
 					
 				</u-form>
 				<view class="u-p-t-50 u-m-b-40">
@@ -226,138 +199,200 @@
 
 <script>
 	import {mapState, mapGetters, mapMutations} from 'vuex'
+	import {getUserCard} from '@/utils/userCard'
 	export default {
 		data() {
-			return {
-				
-				userType: '企业',
+			return { 
+				disabled: false,
+				userType: '个人',
 				showUserType: false,
 				userActions: [{
-						name: '个人',
+						text: '个人',
 					},
 					{
-						name: '个体工商户'
+						text: '个体工商户'
 					},
 					{
-						name: '企业'
+						text: '企业'
 					},
 				],
 				model: {
-					base: {
-						sinopay: '',
-						sinopay_pwd: '',
-					},
-					userInfo: {
-						name: '',
-						id: '',
-					},
-					userInfo2: {
-						name: '',
-						id: '',
-					},
-					cpyInfo: {
-						name: '',
-						id: '',
-					}
+					sinopay: '',
+					sinopay_pwd: '',  
+					name: '',
+					id: '',
+					cpyname: '',
+					cpyid: '',  
+					contact: '',  
 				},
+				btnDisabled: false,
 			}
 		},
-		computed: {
-			...mapState({
-				myCpy: state => state.user.myCpy,
-			}),
+		computed: { 
 			rules() {
-				return {
-					'base.sinopay': {
+				let user1 = {
+					'name': {
 						type: 'string',
 						required: true,
-						message: '请填写sinopay账号',
+						message: '请填写姓名',
 						trigger: ['blur', 'change']
 					},
-					'base.sinopay_pwd': {
+					'id': {
+						type: 'string',
+						validator: (rule, value, callback) => {
+							return this.$u.test.idCard(value)
+						},
+						message: '请填写正确的身份证',
+						trigger: ['blur', 'change']
+					}, 
+				}
+				let user2 = { 
+					'name': {
+						type: 'string',
+						required: true,
+						message: '请填写姓名',
+						trigger: ['blur', 'change']
+					},
+					'id': {
+						type: 'string',
+						required: true,
+						message: '请填写身份证',
+						trigger: ['blur', 'change']
+					}, 
+				}
+				let cpy = {
+					'cpyname': {
+						type: 'string',
+						required: true,
+						message: '请填写企业名称',
+						trigger: ['blur', 'change']
+					},
+					'cpyid': {
+						type: 'string',
+						required: true,
+						message: '请填写信用统一代码',
+						trigger: ['blur', 'change']
+					}, 
+				}
+				let base = {
+					'sinopay': [{
+							type: 'string',
+							required: true,
+							message: '请填写sinopay账号',
+							trigger: ['blur', 'change']
+						} ],
+					'sinopay_pwd': {
 						type: 'string',
 						required: true,
 						message: '请填写sinopay密码',
 						trigger: ['blur', 'change']
 					},
-					// 'userInfo.name': {
-					// 	type: 'string',
-					// 	required: true,
-					// 	message: '请填写姓名',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'userInfo.id': {
-					// 	type: 'string',
-					// 	required: true,
-					// 	message: '请填写身份证',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'userInfo2.name': {
-					// 	type: 'string',
-					// 	required: true,
-					// 	message: '请填写姓名',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'userInfo2.id': {
-					// 	type: 'string',
-					// 	required: true,
-					// 	message: '请填写身份证',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'cpyInfo.name': {
-					// 	type: 'string',
-					// 	required: true,
-					// 	message: '请填写企业名称',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'cpyInfo.id': {
-					// 	type: 'string',
-					// 	required: true,
-					// 	message: '请填写信用统一代码',
-					// 	trigger: ['blur', 'change']
-					// },
+					
+					
 				}
+				let obj = {
+					...base
+				}
+				if(this.userType == '个人') {
+					obj = {
+						...user1,
+						...obj,
+					}
+				}
+				else if(this.userType == '个体工商户') {
+					obj = { 
+						...user2,
+						...obj,
+					}
+				}
+				else if(this.userType == '企业') {
+					obj = { 
+						...cpy,
+						...obj,
+					}
+				} 
+				this.$refs.userform && this.$refs.userform.setRules && this.$refs.userform.setRules(obj)
+				return obj
+			},
+			paramsObj() {
+				let params = { 
+					sinopay: this.model.sinopay,
+					sinopay_pwd: this.model.sinopay_pwd,
+				}
+				if(this.userType == '个人') {
+					params = {
+						...params,
+						type: 1,
+						name: this.model.name,
+						sfz: this.model.id,
+					}
+				}else if(this.userType == '个体工商户') {
+					params = {
+						...params,
+						type: 2, 
+						name: this.model.name,
+						sfz: this.model.id,
+					}
+				}else if(this.userType == '企业') {
+					params = {
+						...params,
+						type: 3,
+						cpyname2: this.model.cpyname,
+						cpycode2: this.model.cpyid, 
+					}
+				}
+				return params
 			}
+			
 		},
 		onReady() {
 			this.$refs.userform.setRules(this.rules)
 		},
+		async onLoad() {
+			 
+		},
 		methods: {
 			...mapMutations({
 				handleGoto: 'sinopay/handleGoto'
-			}),
-			userTypeSelect(e) {
-				this.userType = e.name
-				this.$refs.userform.clearValidate()
-				// this.$refs.form1.validateField('userInfo.sex')
+			}), 
+			userTypeSelect(index) {
+				this.userType = this.userActions[index].text
+				// this.$refs.userform.resetFields()
+				// this.$refs.form1.validateField('sex')
 			},
-			showActions() {
-				// this.showUserType = true; 
-				// uni.hideKeyboard()
+			showActions() { 
+				this.showUserType = true; 
+				uni.hideKeyboard()
 			},
-			submit() {
+			async submit() {
 				
-				this.$refs.userform.validate().then(async r => {
-					const res = await this.$api.sino_account_bind({
-						params: {
-							sinopay_poster: this.model.base.sinopay,
-							sinopay_passwd: this.model.base.sinopay_pwd,
-							remark: this.model.base.remark
+				this.$refs.userform.validate(async r => {
+					if(r) {
+						// uni.$u.toast('校验通过')
+						uni.showLoading()
+						const res = await this.$http.get('market/sinopay_bind', {
+							params: { ...this.paramsObj }
+						});
+						if(res.data.code == 1) {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none',
+								success: () => {
+									this.handleGoto('/sinopay/money/index')
+								}
+							})
+							
 						}
-					})
-					if(res.code == 1) {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none',
-							success: () => {
-								this.handleGoto('/sinopay/money/index')
-							}
-						})
+					}else {
+						// uni.$u.toast('校验失败')
 					}
-					// uni.$u.toast('校验通过')
-				}).catch(errors => {
-					uni.$u.toast('校验失败')
+					
+					
 				})
+			},
+			 
+			handleCountDownFinish() {
+				this.btnDisabled = false;
 			},
 		}
 	}

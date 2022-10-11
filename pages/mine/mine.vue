@@ -47,7 +47,7 @@
 			<image class="arc" src="/static/img/arc.png"></image>
 
 			<view class="tj-sction">
-				<view class="tj-item" @click="navTo('/pages/balance/balance')">
+				<view class="tj-item" @click="navTo('/sinopay/money/index')">
 					<view class="num">
 						<u-icon name="red-packet-fill" color="#3c59c3"></u-icon>
 					</view>
