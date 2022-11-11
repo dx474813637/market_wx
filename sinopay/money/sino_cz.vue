@@ -57,7 +57,7 @@
 						@cancel="show_acc = false" 
 						></u-picker> -->
 					
-					<u-form-item
+					<!-- <u-form-item
 						label="充值类型"
 						@click="showActions"
 						ref="item1"
@@ -71,7 +71,7 @@
 							<view class="u-p-l-20"></view>
 							<u-radio label="预约充值" name="预约充值"></u-radio>
 						</u-radio-group>
-					</u-form-item>
+					</u-form-item> -->
 					<template v-if="cz == 0">
 						<view class="u-p-t-20 u-p-b-20" >
 							<view class="u-flex u-flex-items-center u-m-b-30">
@@ -83,28 +83,30 @@
 								
 							</view>  
 						</view>
-						<u-form-item
-							:label="`选择${cz == 1? '充值' : '提现'}银行卡`"
-							prop="bank_accid"
-							ref="form_bank_accid"
-							required
-						>
-							<view @click="handleSelectBankcard" style="position: relative;">
-								<u-input
-									v-model="bank.name"
-									placeholder="点击选择银行卡"
-									suffixIcon="arrow-down"
-									suffixIconStyle="color: #bbb"
-									readonly
-								></u-input>
-								<view style="position: absolute;left: 0;top: 0;width: 100%;height: 100%; z-index: 50;"></view>
-								<view class="loading-w u-flex u-flex-items-center u-flex-center" v-if="bankLoading" >
-									<u-loading mode="circle" size="45"></u-loading>
-								</view>
-							</view>
-							
-						</u-form-item>
+						
 					</template>
+					<u-form-item
+						:label="`选择${cz == 1? '充值' : '提现'}银行卡`"
+						prop="bank_accid"
+						ref="form_bank_accid"
+						required
+						v-if="cz != 2"
+					>
+						<view @click="handleSelectBankcard" style="position: relative;">
+							<u-input
+								v-model="bank.name"
+								placeholder="点击选择银行卡"
+								suffixIcon="arrow-down"
+								suffixIconStyle="color: #bbb"
+								readonly
+							></u-input>
+							<view style="position: absolute;left: 0;top: 0;width: 100%;height: 100%; z-index: 50;"></view>
+							<view class="loading-w u-flex u-flex-items-center u-flex-center" v-if="bankLoading" >
+								<u-loading mode="circle" size="45"></u-loading>
+							</view>
+						</view>
+						
+					</u-form-item>
 					<view class="u-p-t-20 u-p-b-20" v-if="cz == 2">
 						<view class="u-flex u-flex-items-center u-m-b-30">
 							<text class="text-light u-font-28">转出资金账户：</text>
@@ -415,18 +417,29 @@
 				return `${label}${item.user_fundaccno}-${item.name}`
 			},
 			rules() {
-				if(this.cz != '2') {
-					return {
+				let obj = {}
+				if(this.cz == '0') {
+					obj = {
 						'money': [{
-							type: 'number',
-							required: true,
-							message: '请填写金额数值',
-							trigger: ['blur', 'change']
-						},{
 							validator: (rule, value, callback) => {
-								return value >= 0.01 && value <= Number(this.sino_zh[this.from_wallet].info.bal_refund)
+								return value >= 0.1 && value <= Number(this.sino_zh[this.from_wallet].info.bal_refund)
 							},
-							message: '金额数值必须大于等于0.01且小于等于账户余额'
+							message: '金额数值必须大于等于0.1且小于等于账户余额'
+						}],
+						'bank_accid': {
+							type: 'string',
+							required: true,
+							message: '请选择银行卡',
+							trigger: ['blur', 'change']
+						}
+					}
+				}else if(this.cz == '1') {
+					obj = {
+						'money': [{
+							validator: (rule, value, callback) => {
+								return value >= 0.1 
+							},
+							message: '金额数值必须大于等于0.1'
 						}],
 						'bank_accid': {
 							type: 'string',
@@ -436,13 +449,8 @@
 						}
 					}
 				}else {
-					return {
+					obj = {
 						'money': [{
-							type: 'number',
-							required: true,
-							message: '请填写金额数值',
-							trigger: ['blur', 'change']
-						},{
 							validator: (rule, value, callback) => { 
 								return value >= 0.01 && value <= Number(this.sinoFund[this.index_acc].bal)
 							},
@@ -450,6 +458,11 @@
 						}]
 					}
 				}
+				this.$refs.form && this.$refs.form.setRules && this.$nextTick(() => {
+					console.log(this.cz) 
+					this.$refs.form.setRules(obj)
+				})
+				return obj
 				
 			},
 			rules_yanzheng() {
@@ -484,7 +497,7 @@
 						themeColor: '#d34c3c',
 						value: 'cz',
 						sub: '',
-						func_getbankcard: 'sino_fund_account_list_bind',
+						func_getbankcard: 'market/recharge2',
 						func_sxf: '',
 						func_create: 'market/quick_apply',
 						func_paypwd: '',
@@ -498,7 +511,7 @@
 						value: 'tx',
 						themeColor: '#408df4',
 						sub: '提现提前绑定好提现银行卡，且有可提余额。',
-						func_getbankcard: 'sino_fund_account_list_bind',
+						func_getbankcard: 'market/recharge2',
 						func_sxf: 'sino_fund_refund_fee_fund_count',
 						func_create: 'market/refund_apply',
 						func_code: 'market/success_withdraw',
@@ -535,7 +548,7 @@
 			}
 		},
 		onReady() {
-			this.$refs.form.setRules(this.rules)
+			// this.$refs.form.setRules(this.rules)
 			this.$refs.from_yanzheng.setRules(this.rules_yanzheng)
 			this.$refs.from_yanzheng_code.setRules(this.rules_yanzheng_code)
 		},
@@ -553,7 +566,7 @@
 				})
 			},
 			async refreshBankList() {
-				if(this.cz != 0) return
+				if(this.cz == 2) return
 				this.bankLoading = true;
 				this.initBankCardInfo()
 				await this.getBankCard()
@@ -621,13 +634,24 @@
 			async getBankCard() {
 				// if( this.cz == '2') return
 				// this.loadstatus = 'loading'
-				const res = await this.$http.get('market/recharge2', {
+				const res = await this.$http.get(this.configObj.func_getbankcard, {
 					params: {
 						user_fundaccno: this.sino_zh[this.from_wallet].info.user_fundaccno
 					}
 				})
 				if(res.data.code == 1) {
-					this.indexList = res.data.lista.filter(ele => ele.state == '1')
+					if(this.cz == 1) {
+						this.indexList = res.data.list.map(ele => {
+							return {
+								...ele,
+								bank_accno: ele.accNo,
+								bank_name: ele.plantBankName
+							}
+						})
+					}else if(this.cz == 0) {
+						this.indexList = res.data.lista.filter(ele => ele.state == '1')
+					}
+					
 					 
 				}
 			},
@@ -661,12 +685,20 @@
 				this.$refs.from_yanzheng_code.validate(async (res) => {
 					if(res) {
 						uni.showLoading()
-						const r = await this.$http.get( this.configObj.func_code, {
-							params: {
+						let obj = {
 								user_fundaccno: this.sino_zh[this.from_wallet].info.user_fundaccno,
-								refund_id: this.model_yanzheng_code.id,
-								mobile_code: this.model_yanzheng_code.captcha,  
-							}
+							} 
+						if(this.cz == '1') {
+							obj.quick_id = this.model_yanzheng_code.id;
+							obj.verifyCode = this.model_yanzheng_code.captcha
+							obj.json = 1
+						}
+						if(this.cz == '0') {
+							obj.refund_id = this.model_yanzheng_code.id;
+							obj.mobile_code = this.model_yanzheng_code.captcha
+						} 
+						const r = await this.$http.get( this.configObj.func_code, {
+							params: obj
 						})
 						if(r.data.code == 1) { 
 							this.showToast({
@@ -732,7 +764,11 @@
 						// }
 						console.log(r)
 						if(r.data.code == 1) {
-							this.model_yanzheng_code.id = r.data.refund_id
+							if(this.cz == '1') {
+								this.model_yanzheng_code.id = r.data.quick_id
+							}else if(this.cz == '0') {
+								this.model_yanzheng_code.id = r.data.refund_id
+							} 
 							this.codeInputShow_code = true 
 							// if(this.cz != '2') {
 							// 	this.model_yanzheng.id = r.data.refund_id
@@ -801,6 +837,9 @@
 				console.log(bank)
 				this.bank.name = `${bank.bank_accno}-${bank.bank_name}`
 				this.model.bank_accid = bank.bank_accno
+				if(this.cz == '1') {
+					this.model.bank_accid = bank.id 
+				}
 				this.bankClose()
 			},
 			handleBack() {

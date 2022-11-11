@@ -110,6 +110,12 @@ export default async function(vm) {
 			
 			
   //       }  
+		// if(store.state.sinopay.sino.list.auth_state == '1' && store.state.sinopay.sino.list.sinop_type == 'C' && url =='/sinopay/money/card_add' ){
+		// 	uni.navigateTo({
+		// 		url: '/sinopay/money/bang_about_detail'
+		// 	})
+		// 	return false
+		// } 
 		if (sinopayWhiteList) {
 			//sinopay页面 
 			if(url.includes('/sinopay/money/')) { 

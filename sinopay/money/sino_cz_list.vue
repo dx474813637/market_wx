@@ -28,6 +28,12 @@
 								:type="tabs_list[tabs_current].value"
 								@detail="handleCzDetail"
 							></CzCard>
+							<ZzCzCard
+								v-if="tabs_list[tabs_current].value == 'zzcz'"
+								:detailData="item"
+								:type="tabs_list[tabs_current].value"
+								@detail="handlezzCzDetail"
+							></ZzCzCard>
 						</view>
 					</view>
 					
@@ -42,7 +48,7 @@
 				/>
 			</template>
 			<template v-else>
-				<u-empty :text="emptyText" :mode="emptyMode" :margin-top="emptymarginTop"></u-empty>
+				<u-empty text="列表为空" mode="list" margin-top="20"></u-empty>
 			</template>
 			<!-- <List
 				listType="dot"
@@ -71,6 +77,7 @@
 <script>
 	import {mapState, mapGetters, mapMutations} from 'vuex'
 	import CzCard from '@/sinopay/components/CzCard/CzCard.vue'
+	import ZzCzCard from '@/sinopay/components/ZzCzCard/ZzCzCard.vue'
 	import tmzzCard from '@/sinopay/components/tmzzCard/tmzzCard.vue'
 	import txzzCard from '@/sinopay/components/txzzCard/txzzCard.vue'
 	import List from '@/components/list/list.vue'
@@ -108,12 +115,12 @@
 					// 	value: 'tmzz',
 					// 	func: 'sino_fund_account_list_tran',
 					// },
-					// {
-					// 	name: '提现卡转账充值',
-					// 	disabled: false,
-					// 	value: 'txzz',
-					// 	func: 'market/list_bind_deposit',
-					// },
+					{
+						name: '转账充值',
+						disabled: false,
+						value: 'zzcz',
+						func: 'market/list_bind_deposit',
+					},
 				],
 				indexList: [],
 				curP: 1,
@@ -150,6 +157,7 @@
 		},
 		components: {
 			CzCard,
+			ZzCzCard,
 			tmzzCard,
 			txzzCard,
 			List
@@ -219,6 +227,9 @@
 					url: `/sinopay/money/sino_cz_detail?id=${refund_id || quick_id}&type=${this.tabs_list[this.tabs_current].value}`
 				})
 			}, 
+			handlezzCzDetail(data) {
+				
+			},
 		}
 	}
 </script>

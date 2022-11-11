@@ -34,7 +34,11 @@
 					</view>
 				</view>
 				<view class="item-right">
-					<view @click="handleGoto({url: '/sinopay/money/card_add', params: { wallet: sinoType }})" class="btn">
+					<view v-if="sino.list.sinop_type == 'C'">
+						<view @click="handleGoto({url: '/sinopay/money/bang_about_detail', params: { wallet: sinoType }})" class="btn"  v-if="sino.list.auth_state == '1'">银联绑卡</view>
+						<view @click="handleGoto({url: '/sinopay/money/card_add', params: { wallet: sinoType }})" class="btn" v-if="sino.list.auth_state != '1'">绑卡认证</view>
+					</view> 
+					<view @click="handleGoto({url: '/sinopay/money/card_add', params: { wallet: sinoType }})" class="btn" v-else>
 						<template v-if="sino.list.auth_state == '1'">添加银行卡</template>
 						<template v-else>绑卡认证</template>
 						
@@ -44,7 +48,8 @@
 		</view>
 		<view class="box-caozuo u-flex">
 			<view @click="handleGoto({url: '/sinopay/money/sino_cz', params: {cz: 0, wallet: sinoType}})" class="item-btn tx u-flex u-flex-center u-flex-items-center">提现</view>
-			<view @click="show_zzlc = true" class="item-btn cz u-flex u-flex-center u-flex-items-center">转账充值</view>
+		<!-- <view @click="show_zzlc = true" class="item-btn cz u-flex u-flex-center u-flex-items-center">转账充值</view> -->
+			<view @click="handleGoto({url: '/sinopay/money/sino_cz', params: {cz: 1, wallet: sinoType}})" class="item-btn cz u-flex u-flex-center u-flex-items-center">充值</view>
 		</view>
 		
 		<view class="loading-w u-flex u-flex-items-center u-flex-center" v-if="sinoFundLoading">

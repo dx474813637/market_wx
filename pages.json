@@ -445,6 +445,15 @@
 					}
 
 				}
+			    ,{
+                    "path" : "money/bang_about_detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
 			]
 		}
 	], 

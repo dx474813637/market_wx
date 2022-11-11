@@ -11,6 +11,7 @@
 			>  
 			</u-tabs>
 		</view>
+			<u-parse :html="content"></u-parse>
 		<view class="list">
 			<List
 				listType="dot"
@@ -53,11 +54,11 @@
 			'boxShadow': '0 0 10rpx rgba(0,0,0,.1)'
 		}">
 			<view class="u-flex u-flex-items-center u-p-20"> 
-				<view class="u-flex-1 u-m-r-10" v-if="tabs_current == '0' " @click="handleGoto({url: '/sinopay/money/card_add', params: {wallet: wallet_type}})" >
-					<u-button type="error" shape="circle" icon="plus-circle">添加银行卡</u-button>
+				<view class="u-flex-1 u-m-r-10" v-if="tabs_current == '0' " >
+					<u-button type="error" shape="circle" icon="plus-circle" @click="handleGoto('/sinopay/money/card_add')">添加银行卡</u-button>
 				</view>
-				<view class="u-flex-1 u-m-l-10" @click="show_zzlc = true" >
-					<u-button type="primary" shape="circle" icon="file-text">转账充值流程</u-button>
+				<view class="u-flex-1 u-m-l-10" >
+					<u-button type="primary" shape="circle" icon="file-text" @click="show_zzlc = true">转账充值流程</u-button>
 				</view>
 			</view>
 		</tabBar>
@@ -79,6 +80,7 @@
 	export default {
 		data() {
 			return {
+				content: '',
 				wallet_type: 'B',
 				keyword: '', 
 				tabs_current: 0,
@@ -214,6 +216,7 @@
 				})
 				if(res.data.code == 1) {
 					this.indexList = res.data.list.list
+					this.content = res.data.info
 				}
 			},
 			async getMoreData() {

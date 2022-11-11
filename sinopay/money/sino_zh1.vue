@@ -49,13 +49,13 @@
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">
 								<i class="custom-icon-searchlist custom-icon"></i>
 							</view>
-							<view class="text-base item-t">充值 / 提现 记录</view>
+							<view class="text-base item-t">充值 / 提现 / 转账充值 记录</view>
 						</view>
 						<view class="item-right">
 							<i class="custom-icon-right custom-icon"></i>
 						</view>
 					</view>
-					<view @click="handleGoto('/sinopay/money/sino_zh2')" class="list-item">
+					<!-- <view @click="handleGoto('/sinopay/money/sino_zh2')" class="list-item">
 						<view class="item-left">
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">
 								<i class="custom-icon-moneybag custom-icon"></i>
@@ -66,7 +66,7 @@
 							<view>{{wallet.relation_id}}</view>
 							<i class="custom-icon-right custom-icon"></i>
 						</view>
-					</view>
+					</view> -->
 					<!-- <view @click="handleGoto({url: '/sinopay/money/sino_cz_list', params: {tabs_current: 3}})" class="list-item">
 						<view class="item-left">
 							<view class="icon-wrap u-flex u-flex-center u-flex-items-center">

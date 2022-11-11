@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<view class="top"></view>
 		<view class="content">
-			<view class="title">欢迎登录生意宝</view>
+			<view class="title">欢迎登录{{homename.title}}</view>
 			<u-form :model="form" ref="uForm" :error-type="['border-bottom', 'toast']">
 				<u-form-item prop="login" :left-icon-style="{'color': '#999'}"
 					:left-icon="logintype == 1 ?'phone-fill' : 'account-fill' ">
@@ -28,7 +28,7 @@
 		<view class="buttom safe-area-inset-bottom">
 			<view class="hint">
 				注册/登录代表同意
-				<text class="link">生意宝用户协议、隐私政策，</text>
+				<text class="link">{{homename.title}}用户协议、隐私政策，</text>
 				并授权使用您的生意宝账号信息（如昵称、头像、收获地址）以便您统一管理
 			</view>
 		</view>
@@ -84,6 +84,9 @@
 					'backgroundColor': this.$store.state.theme.themeColor,
 					'marginTop': '40rpx'
 				}
+			},
+			homename() {
+				return uni.getStorageSync('home')
 			}
 		},
 		onLoad(){

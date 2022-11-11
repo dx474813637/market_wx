@@ -97,7 +97,7 @@
 				<text class="cell-tit clamp">商品金额</text>
 				<text class="cell-tip clamp">¥{{totalPrice}}</text>
 			</view>
-			<view class="yt-list-cell sz b-b" >
+			<view class="yt-list-cell sz b-b" v-if="szObj.sz">
 				<view class="cell-tit clamp">
 					<text>{{szObj.sz_name}}</text>
 					<view class="sz_sub" v-if="szObj.sz_info">{{szObj.sz_info}}</view>
@@ -106,7 +106,7 @@
 					<u-switch v-model="sz_checked" :active-color="switchBtn"></u-switch>
 				</view>
 			</view>
-			<view class="yt-list-cell sz b-b"><text style="line-height: 20px;">商家支持赊账仅代表部份商品可赊账，选择赊账支付提交，非赊账商品自动生成现金订单！</text></view>
+			<view class="yt-list-cell sz b-b" v-if="szObj.sz"><text style="line-height: 20px;">商家支持赊账仅代表部份商品可赊账，选择赊账支付提交，非赊账商品自动生成现金订单！</text></view>
 			
 			<!-- <view class="yt-list-cell sz b-b" v-if="szObj.rz">
 				<view class="cell-tit clamp">

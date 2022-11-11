@@ -16,10 +16,10 @@
 		</view>
 		<view class="card-bottom">
 			<view class="person-concat">
-				<view class="concat-item concat-phone" v-if="list.phone" @click="copyData(list.phone)">
+				<view class="concat-item concat-phone" v-if="list.phone" @click="markphone(list.phone)">
 					<u-icon name="phone-fill" color="#9073ca"></u-icon>
 					<text class="concat-value">{{list.phone}}</text>
-					<u-icon name="file-text-fill" color="#a896d6" size="24"></u-icon><text class="copy-text">[点击复制]</text>
+					<u-icon name="file-text-fill" color="#a896d6" size="24"></u-icon><text class="copy-text">[点击拨打]</text>
 				</view>
 				<view class="concat-item concat-wx" v-if="list.card_wx.weixin"  @click="copyData(list.card_wx.weixin)">
 					<u-icon name="weixin-fill" color="#9073ca"></u-icon>
@@ -66,6 +66,11 @@
 				        	title: '成功复制信息'
 				        })
 				    }
+				});
+			},
+			markphone(data) {
+				uni.makePhoneCall({
+					phoneNumber: String(data), 
 				});
 			}
 		}
