@@ -155,7 +155,7 @@ http.interceptors.response.use(async (response) => { /* 请求之后拦截器。
 					title: response.data.msg,
 					icon: 'none',
 					mask: true,
-					duration: 1000
+					duration: 2000
 				})
 			}
 		}

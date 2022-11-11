@@ -796,6 +796,13 @@
 								// });  
 							// }
 						}
+						else if(r.data.code == 2) {
+							uni.showModal({
+								title: '提示',
+								content: r.data.msg,
+								showCancel: false
+							});
+						}
 					} 
 					else { 
 						uni.$u.toast('校验失败')

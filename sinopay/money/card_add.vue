@@ -432,15 +432,38 @@
 						const r = await this.$http.get( 'market/success_rz_sinopay', {params: paramsObj})
 						console.log(r)
 						if(r.data.code == 1) { 
-							uni.showToast({
-								title: r.data.msg,
-								icon: 'none',
-								success: () => {
-									uni.redirectTo({
-										url: `/sinopay/money/bank_card_detail?bid=${this.model_yanzheng.id}&aid=${this.wallet.user_fundaccno}`  
-									})
-								}
-							})
+							if(this.sino.list.sinop_type == 'C' && this.sino.list.sinopay_pay_pass != '1') {
+								uni.showModal({
+									title: '提示',
+									content: '认证成功，目前您还没有设置支付密码',
+									confirmText: '设置支付密码',
+									cancelText: '绑定详情',
+									success: function (res2) {
+										if (res2.confirm) {
+											uni.redirectTo({
+												url: '/sinopay/money/sino_paypw_set'  
+											})
+										} else if (res2.cancel) {
+											uni.redirectTo({
+												url: `/sinopay/money/bank_card_detail?bid=${this.model_yanzheng.id}&aid=${this.wallet.user_fundaccno}`  
+											})
+										}
+									}
+								});
+							}
+							else {
+								uni.showToast({
+									title: r.data.msg,
+									icon: 'none',
+									success: () => {
+										uni.redirectTo({
+											url: `/sinopay/money/bank_card_detail?bid=${this.model_yanzheng.id}&aid=${this.wallet.user_fundaccno}`  
+										})
+									}
+								})
+							}
+							
+							
 						}
 					}else {
 						uni.$u.toast('校验失败')
@@ -465,6 +488,13 @@
 								title: r.data.msg,
 								icon: 'none'
 							}) 
+						}
+						else if(r.data.code == 2) {
+							uni.showModal({
+								title: '提示',
+								content: r.data.msg,
+								showCancel: false
+							});
 						}
 					}else {
 						uni.$u.toast('校验失败')
