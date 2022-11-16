@@ -9,6 +9,11 @@ let state = {
 		},
 		sinoFund: [],
 		sinoFundLoading: false, 
+		sinopayIndex: { 
+			code: 1,
+			msg: ''
+		},
+		sinopayIndexLoading: false
 	},
 	getters = {
 		
@@ -23,6 +28,13 @@ let state = {
 		},
 		setSinoFundLoading(state, data) {
 			state.sinoFundLoading = data
+		},  
+		setSinoIndex(state, {code, msg}) {
+			state.sinopayIndex.code = code
+			state.sinopayIndex.msg = msg
+		},  
+		setSinoIndexLoading(state, data) {
+			state.sinopayIndexLoading = data 
 		},  
 		clearSino(state, data) {
 			state.sinoFund = []
@@ -39,11 +51,14 @@ let state = {
 	},
 	actions = {
 		async getSinoAccount({commit, state}, data={}) {
+			commit('setSinoIndexLoading', true)
 			const res = await this._vm.$http.get('Market/moneyCenter3');
 			// console.log(res)
 			if(res.data.code == 1) {
 				commit('setSinoAccount', res.data)
 			}
+			commit('setSinoIndex', {code: res.data.code, msg: res.data.msg})
+			commit('setSinoIndexLoading', false)
 		},
 		// async getSinoFundAccount({commit, state}, data={}) {
 			

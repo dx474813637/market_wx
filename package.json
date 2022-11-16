@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "uview-ui": "^1.8.4"
+  },
+  "devDependencies": {
+    "vue-inset-loader": "^1.2.6"
   }
 }

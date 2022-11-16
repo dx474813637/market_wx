@@ -1,5 +1,10 @@
 <template>
 	<view class="wrapper">
+		<view class="index_loading_W u-flex u-flex-center u-flex-items-start" :class="{
+			show: sinopayIndex.code != 1 || sinopayIndexLoading
+		}">
+			<u-loading :show="sinopayIndexLoading" size="50"></u-loading>
+		</view>
 		
 		<SinoHeader
 			mode="1"
@@ -119,6 +124,8 @@
 		computed: {
 			...mapState({ 
 				sino: state => state.sinopay.sino,
+				sinopayIndex: state => state.sinopay.sinopayIndex,
+				sinopayIndexLoading: state => state.sinopay.sinopayIndexLoading,
 				// sinoFund: state => state.sinopay.sinoFund,
 			}),
 			// wallet_b() {
@@ -140,6 +147,24 @@
 			getUserCard()
 			await this.getSinoAccount() 
 			// this.show = true
+			
+			if(this.sinopayIndex.code == 7) {
+				uni.showModal({
+					title: '提示',
+					content: this.sinopayIndex.msg,
+					showCancel: false, 
+					success: function (res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							uni.reLaunch({
+								url: '/pages/mine/mine'
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			}
 			if(this.sino.State == 1) {
 				this.show = true
 			} else {
@@ -176,14 +201,19 @@
 	}
 </style>
 <style lang="scss" scoped>
-	.loading-w {
-		position: absolute;
+	.index_loading_W {
+		position: fixed;
 		left: 0;
 		top: 0;
 		width: 100%;
 		height: 100%;
 		z-index: 10;
-		background-color: rgba(255,255,255,.7);
+		padding-top: 200px;
+		background-color: rgba(0,0,0,.1); 
+		display: none;
+		&.show {
+			display: block
+		}
 	}
 	.wrapper {
 		padding-bottom: 60px;

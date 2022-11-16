@@ -2,6 +2,19 @@
 	"easycom": {
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
+	"insetLoader": {
+		//配置
+		"config": {
+			//将需要引入的组件名起了个confirm的名字在下面label中使用
+			//右侧"<test ref='confirm' />"为需要插入的组件标签
+			"uToast": "<u-toast ref='uToast' />"
+		},
+		// 全局配置  
+		//需要挂在的组件名
+		"label": ["uToast"],
+		//根元素的标签类型 也就是插入到页面哪个根元素下默认为div 但是uniapp中需要写为view
+		"rootEle": "view"
+	},
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
